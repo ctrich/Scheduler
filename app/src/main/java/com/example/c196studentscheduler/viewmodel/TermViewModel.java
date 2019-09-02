@@ -12,16 +12,14 @@ import com.example.c196studentscheduler.entity.Term;
 
 import java.util.List;
 
-public class TermListViewModel extends AndroidViewModel {
-    private static final String TAG = "TermListViewModel";
+public class TermViewModel extends AndroidViewModel {
 
 
     public LiveData<List<Term>> mTerms;
     private SchedulerRepository schedulerRepository;
 
-    public TermListViewModel(@NonNull Application application) {
+    public TermViewModel(@NonNull Application application) {
         super(application);
-        Log.d(TAG, "TermListViewModel: running" + application);
         schedulerRepository = SchedulerRepository.getInstance(application.getApplicationContext());
         mTerms = schedulerRepository.mTerms;
     }

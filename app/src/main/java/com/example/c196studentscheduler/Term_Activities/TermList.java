@@ -1,7 +1,6 @@
 package com.example.c196studentscheduler.Term_Activities;
 
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.lifecycle.LiveData;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProviders;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -16,7 +15,7 @@ import com.example.c196studentscheduler.AddTerm;
 import com.example.c196studentscheduler.R;
 import com.example.c196studentscheduler.adapter.TermListAdapter;
 import com.example.c196studentscheduler.entity.Term;
-import com.example.c196studentscheduler.viewmodel.TermListViewModel;
+import com.example.c196studentscheduler.viewmodel.TermViewModel;
 
 import java.util.ArrayList;
 import java.util.Date;
@@ -31,10 +30,8 @@ public class TermList extends AppCompatActivity {
     RecyclerView mRecyclerView;
     private List<Term> termsData = new ArrayList<>();
     private TermListAdapter mAdapter;
-    private TermListViewModel termListViewModel;
+    private TermViewModel termListViewModel;
 
-    private Date date = new Date();
-    private Term term1 = new Term("Summer", date, date);
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -70,8 +67,8 @@ public class TermList extends AppCompatActivity {
         };
 
         Log.d(TAG, "initViewModel: running");
-        termListViewModel = ViewModelProviders.of(this).get(TermListViewModel.class);
-        termListViewModel.addTerms(term1);
+        termListViewModel = ViewModelProviders.of(this).get(TermViewModel.class);
+       // termListViewModel.addTerms(term1);
         termListViewModel.mTerms.observe(this, termObserver);
     }
 

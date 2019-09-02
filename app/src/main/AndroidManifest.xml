@@ -9,15 +9,7 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity
-            android:name=".AddTerm"
-            android:label="@string/title_activity_add_term"
-            android:parentActivityName=".Term_Activities.TermList"
-            android:theme="@style/AppTheme.NoActionBar">
-            <meta-data
-                android:name="android.support.PARENT_ACTIVITY"
-                android:value="com.example.c196studentscheduler.Term_Activities.TermList" />
-        </activity>
+        <activity android:name=".AddTerm"></activity>
         <activity android:name=".Term_Activities.TermList" />
         <activity android:name=".MainActivity">
             <intent-filter>
