@@ -29,4 +29,8 @@ public class TermListViewModel extends AndroidViewModel {
     public void addTerms(Term term) {
         schedulerRepository.createTerm(term);
     }
+
+    public LiveData<List<Term>> getTerms() {
+        return schedulerRepository.getAllTerms();
+    }
 }

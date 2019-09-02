@@ -1,6 +1,7 @@
 package com.example.c196studentscheduler.Term_Activities;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.lifecycle.LiveData;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProviders;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -10,7 +11,6 @@ import android.os.Bundle;
 import android.util.Log;
 
 import com.example.c196studentscheduler.R;
-import com.example.c196studentscheduler.TermsSampledata;
 import com.example.c196studentscheduler.adapter.TermListAdapter;
 import com.example.c196studentscheduler.entity.Term;
 import com.example.c196studentscheduler.viewmodel.TermListViewModel;
@@ -30,8 +30,8 @@ public class TermList extends AppCompatActivity {
     private TermListAdapter mAdapter;
     private TermListViewModel termListViewModel;
 
-    private Date date = new Date(2018, 11, 1);
-    private Term term1 = new Term("Term1", date, date);
+    private Date date = new Date();
+    private Term term1 = new Term("Summer", date, date);
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -43,23 +43,21 @@ public class TermList extends AppCompatActivity {
         ButterKnife.bind(this);
         initRecyclerView();
         initViewModel();
+
     }
 
     private void initViewModel() {
 
-        final Observer<List<Term>> termObserver = new Observer<List<Term>>() {
-            @Override
-            public void onChanged(List<Term> terms) {
-                termsData.clear();
-                termsData.addAll(terms);
-                if (mAdapter == null) {
-                    mAdapter = new TermListAdapter(termsData, TermList.this);
-                    mRecyclerView.setAdapter(mAdapter);
-                }else {
-                    mAdapter.notifyDataSetChanged();
-                }
-
+        final Observer<List<Term>> termObserver = terms -> {
+            termsData.clear();
+            termsData.addAll(terms);
+            if (mAdapter == null) {
+                mAdapter = new TermListAdapter(termsData, TermList.this);
+                mRecyclerView.setAdapter(mAdapter);
+            }else {
+                mAdapter.notifyDataSetChanged();
             }
+
         };
 
         Log.d(TAG, "initViewModel: running");

@@ -62,8 +62,8 @@ public class SchedulerRepository {
     private SchedulerRepository(Context context) {
         Log.d(TAG, "SchedulerRepository: running" + context);
         mDb = SchedulerRoomDatabase.getDatabase(context);
+        termDAO = mDb.termDAO();
         mTerms = getAllTerms();
-
     }
 
 

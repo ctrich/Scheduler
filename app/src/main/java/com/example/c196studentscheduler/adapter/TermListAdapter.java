@@ -12,11 +12,10 @@ import androidx.cardview.widget.CardView;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.c196studentscheduler.R;
-import com.example.c196studentscheduler.TermsSampledata;
 import com.example.c196studentscheduler.entity.Term;
 
-import org.w3c.dom.Text;
-
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.util.List;
 
 import butterknife.BindView;
@@ -42,9 +41,11 @@ public class TermListAdapter extends RecyclerView.Adapter<TermListAdapter.ViewHo
 
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
-//        holder.mTermTitle.setText(mTerms.get(position).getName());
-//        holder.mTermStart.setText(mTerms.get(position).getStartDate());
-//        holder.mTermEnd.setText(mTerms.get(position).getEndDate());
+        SimpleDateFormat sdf = new SimpleDateFormat("dd-MM-yyyy");
+        String sDate = sdf.format(mTerms.get(position).getStartDate());
+        holder.mTermTitle.setText(mTerms.get(position).getName());
+        holder.mTermStart.setText(sDate);
+        //holder.mTermEnd.setText(mTerms.get(position).getEndDate().toString());
     }
 
     @Override
