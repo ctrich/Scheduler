@@ -41,11 +41,14 @@ public class TermListAdapter extends RecyclerView.Adapter<TermListAdapter.ViewHo
 
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
-        SimpleDateFormat sdf = new SimpleDateFormat("dd-MM-yyyy");
+        SimpleDateFormat sdf = new SimpleDateFormat("MM-dd-yyyy");
+
         String sDate = sdf.format(mTerms.get(position).getStartDate());
+        String eDate = sdf.format(mTerms.get(position).getEndDate());
+
         holder.mTermTitle.setText(mTerms.get(position).getName());
         holder.mTermStart.setText(sDate);
-        //holder.mTermEnd.setText(mTerms.get(position).getEndDate().toString());
+        holder.mTermEnd.setText(eDate);
     }
 
     @Override

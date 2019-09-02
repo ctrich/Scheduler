@@ -7,9 +7,12 @@ import androidx.lifecycle.ViewModelProviders;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.View;
 
+import com.example.c196studentscheduler.AddTerm;
 import com.example.c196studentscheduler.R;
 import com.example.c196studentscheduler.adapter.TermListAdapter;
 import com.example.c196studentscheduler.entity.Term;
@@ -44,6 +47,12 @@ public class TermList extends AppCompatActivity {
         initRecyclerView();
         initViewModel();
 
+    }
+
+    public void showAddTerm(View view) {
+        Log.d(TAG, "showTerm: running");
+        Intent intent = new Intent(this, AddTerm.class);
+        startActivity(intent);
     }
 
     private void initViewModel() {

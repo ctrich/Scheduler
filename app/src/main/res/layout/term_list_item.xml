@@ -36,7 +36,7 @@
 
             <TextView
                 android:id="@+id/term_start"
-                android:layout_width="67dp"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="8dp"
                 android:layout_marginLeft="8dp"
@@ -47,11 +47,11 @@
 
             <TextView
                 android:id="@+id/term_end"
-                android:layout_width="56dp"
+                android:layout_width="wrap_content"
                 android:layout_height="18dp"
                 android:layout_marginStart="8dp"
                 android:layout_marginLeft="8dp"
-                android:textSize="14sp"
+                android:textSize="12sp"
                 app:layout_constraintBaseline_toBaselineOf="@+id/textView7"
                 app:layout_constraintStart_toEndOf="@+id/textView7"
                 tools:text="5-1-2021" />
