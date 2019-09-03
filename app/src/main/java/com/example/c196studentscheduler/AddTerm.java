@@ -45,6 +45,12 @@ public class AddTerm extends AppCompatActivity {
         setContentView(R.layout.activity_add_term);
 
         ButterKnife.bind(this);
+        initViewModel();
+    }
+
+    private void initViewModel() {
+        termViewModel = ViewModelProviders.of(this)
+                .get(TermViewModel .class);
     }
 
 
@@ -57,7 +63,6 @@ public class AddTerm extends AppCompatActivity {
         Date endD = convertStringToDate(ed);
         currentTerm = new Term(termTitle.getText().toString(), startD, endD);
 
-        termViewModel = ViewModelProviders.of(this).get(TermViewModel .class);
         termViewModel.addTerms(currentTerm);
 
         Intent intent = new Intent(this, TermList.class);

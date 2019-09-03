@@ -2,6 +2,7 @@ package com.example.c196studentscheduler.adapter;
 
 
 import android.content.Context;
+import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -11,10 +12,11 @@ import androidx.annotation.NonNull;
 import androidx.cardview.widget.CardView;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.example.c196studentscheduler.Term_Activities.EditTerm;
 import com.example.c196studentscheduler.R;
 import com.example.c196studentscheduler.entity.Term;
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
-import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.List;
 
@@ -41,6 +43,7 @@ public class TermListAdapter extends RecyclerView.Adapter<TermListAdapter.ViewHo
 
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
+        final Term term = mTerms.get(position);
         SimpleDateFormat sdf = new SimpleDateFormat("MM-dd-yyyy");
 
         String sDate = sdf.format(mTerms.get(position).getStartDate());
@@ -49,6 +52,12 @@ public class TermListAdapter extends RecyclerView.Adapter<TermListAdapter.ViewHo
         holder.mTermTitle.setText(mTerms.get(position).getName());
         holder.mTermStart.setText(sDate);
         holder.mTermEnd.setText(eDate);
+
+        holder.mFab.setOnClickListener(view -> {
+            Intent intent = new Intent(context, EditTerm.class);
+            intent.putExtra("term_id_key", term.getTermId());
+            context.startActivity(intent);
+        });
     }
 
     @Override
@@ -70,6 +79,8 @@ public class TermListAdapter extends RecyclerView.Adapter<TermListAdapter.ViewHo
         TextView mTermStart;
         @BindView(R.id.term_end)
         TextView mTermEnd;
+        @BindView(R.id.edit_term_fab)
+        FloatingActionButton mFab;
 
         public ViewHolder(@NonNull View itemView) {
             super(itemView);

@@ -1,4 +1,4 @@
-package com.example.c196studentscheduler;
+package com.example.c196studentscheduler.activities;
 
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -7,6 +7,7 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 
+import com.example.c196studentscheduler.R;
 import com.example.c196studentscheduler.Term_Activities.TermList;
 
 public class MainActivity extends AppCompatActivity {

@@ -155,7 +155,7 @@ public class SchedulerRepository {
     }
 
     //search by id
-    public LiveData<Term> getTermByid(int termId) {
+    public Term getTermByid(int termId) {
         return termDAO.getTermById(termId);
     }
 
