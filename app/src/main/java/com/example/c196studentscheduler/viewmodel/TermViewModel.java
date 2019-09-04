@@ -1,7 +1,6 @@
 package com.example.c196studentscheduler.viewmodel;
 
 import android.app.Application;
-import android.util.Log;
 
 import androidx.annotation.NonNull;
 import androidx.lifecycle.AndroidViewModel;
@@ -19,6 +18,7 @@ public class TermViewModel extends AndroidViewModel {
 
 
     public LiveData<List<Term>> mTerms;
+    public List<Term> listTerms;
     public MutableLiveData<Term> mLiveTerm = new MutableLiveData<>();
     private SchedulerRepository schedulerRepository;
     private Executor executor = Executors.newSingleThreadExecutor();
@@ -27,15 +27,31 @@ public class TermViewModel extends AndroidViewModel {
         super(application);
         schedulerRepository = SchedulerRepository.getInstance(application.getApplicationContext());
         mTerms = schedulerRepository.mTerms;
+        listTerms = schedulerRepository.listTerms;
     }
 
     public void addTerms(Term term) {
         schedulerRepository.createTerm(term);
     }
 
-    public LiveData<List<Term>> getTerms() {
-        return schedulerRepository.getAllTerms();
+    public void updateTerm(Term term) {
+        executor.execute(new Runnable() {
+            @Override
+            public void run() {
+                schedulerRepository.updateTerm(term);
+            }
+        });
     }
+
+    public void deleteTerm(Term term) {
+        executor.execute(new Runnable() {
+            @Override
+            public void run() {
+                schedulerRepository.deleteTerm(term);
+            }
+        });
+    }
+
 
     public void loadData(int termId) {
         executor.execute(new Runnable() {

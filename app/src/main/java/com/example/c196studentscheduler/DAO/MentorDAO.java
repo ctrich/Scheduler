@@ -26,8 +26,6 @@ public interface MentorDAO {
     @Query("SELECT * FROM Mentors")
     LiveData<List<Mentor>> getAllMentors();
 
-    @Query("SELECT * FROM Mentors m JOIN Courses c ON m.MentorId = c.MentorId WHERE c.MentorId = :courseId")
-    LiveData<List<Mentor>> getMentorsByCourseId(int courseId);
 
     @Query("SELECT * FROM Mentors WHERE MentorId = :mentorId")
     LiveData<Mentor> getMentorById(int mentorId);

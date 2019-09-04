@@ -19,7 +19,7 @@ import com.example.c196studentscheduler.entity.Mentor;
 import com.example.c196studentscheduler.entity.Note;
 import com.example.c196studentscheduler.entity.Term;
 
-@Database(entities = {Term.class, Course.class, Mentor.class, Note.class, Assessment.class}, version = 1)
+@Database(entities = {Term.class, Course.class, Mentor.class, Note.class, Assessment.class}, version = 4)
 @TypeConverters({DateConverter.class})
 public abstract class SchedulerRoomDatabase extends RoomDatabase {
     private static final String TAG = "SchedulerRoomDatabase";
@@ -39,9 +39,11 @@ public abstract class SchedulerRoomDatabase extends RoomDatabase {
             synchronized (lock) {
                 if (INSTANCE == null)
                     Log.d(TAG, "getDatabase: running " + context);
-                    INSTANCE = Room.databaseBuilder(context.getApplicationContext(), SchedulerRoomDatabase.class, DATABASE_NAME).build();
+                    INSTANCE = Room.databaseBuilder(context.getApplicationContext(), SchedulerRoomDatabase.class, DATABASE_NAME).fallbackToDestructiveMigration().build();
             }
         }
         return INSTANCE;
     }
+
+
 }

@@ -23,9 +23,9 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="40dp"
         android:layout_marginLeft="40dp"
-        android:layout_marginTop="16dp"
+        android:layout_marginTop="8dp"
         android:text="Term Title:"
-        android:textSize="16sp"
+        android:textSize="24sp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/edit_term_title" />
 
@@ -33,7 +33,8 @@
         android:id="@+id/textView3"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="32dp"
+        android:layout_marginTop="16dp"
+        android:textSize="24sp"
         android:text="Start Date:"
         app:layout_constraintEnd_toEndOf="@+id/edit_term_term_title"
         app:layout_constraintTop_toBottomOf="@+id/edit_term_term_title" />
@@ -42,39 +43,43 @@
         android:id="@+id/textView4"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="24dp"
+        android:layout_marginTop="16dp"
         android:text="End Date"
+        android:textSize="24sp"
         app:layout_constraintBottom_toTopOf="@+id/guideline3"
         app:layout_constraintEnd_toEndOf="@+id/textView3"
         app:layout_constraintTop_toBottomOf="@+id/textView3"
         app:layout_constraintVertical_bias="0.0" />
 
-    <TextView
-        android:id="@+id/textView5"
+    <EditText
+        android:id="@+id/et_edit_sDate"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="8dp"
         android:layout_marginLeft="8dp"
+        android:textSize="20sp"
         android:text="TextView"
         app:layout_constraintBaseline_toBaselineOf="@+id/textView3"
         app:layout_constraintStart_toEndOf="@+id/textView3" />
 
-    <TextView
-        android:id="@+id/textView8"
+    <EditText
+        android:id="@+id/et_edit_eDate"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="8dp"
         android:layout_marginLeft="8dp"
+        android:textSize="20sp"
         android:text="TextView"
         app:layout_constraintBaseline_toBaselineOf="@+id/textView4"
         app:layout_constraintStart_toEndOf="@+id/textView4" />
 
-    <TextView
-        android:id="@+id/textView9"
+    <EditText
+        android:id="@+id/et_edit_title"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="8dp"
         android:layout_marginLeft="8dp"
+        android:textSize="20sp"
         android:text="TextView"
         app:layout_constraintBaseline_toBaselineOf="@+id/edit_term_term_title"
         app:layout_constraintStart_toEndOf="@+id/edit_term_term_title" />
@@ -93,27 +98,43 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
-        app:layout_constraintGuide_percent="0.5" />
+        app:layout_constraintGuide_begin="232dp" />
 
     <Button
-        android:id="@+id/button6"
+        android:id="@+id/edit_save_btn"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="16dp"
+        android:onClick="updateTerm"
         android:text="Save"
-        app:layout_constraintStart_toStartOf="@+id/button7"
+        app:layout_constraintStart_toStartOf="@+id/edit_cancel_btn"
         app:layout_constraintTop_toBottomOf="@+id/edit_term_title" />
 
     <Button
-        android:id="@+id/button7"
+        android:id="@+id/edit_cancel_btn"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="24dp"
         android:layout_marginEnd="100dp"
         android:layout_marginRight="100dp"
         android:layout_marginBottom="4dp"
+        android:onClick="cancelEdit"
         android:text="@android:string/cancel"
         app:layout_constraintBottom_toTopOf="@+id/guideline3"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/button6" />
+        app:layout_constraintTop_toBottomOf="@+id/edit_save_btn" />
+
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
+        android:id="@+id/delete_term_fab"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="60dp"
+        android:layout_marginRight="60dp"
+        android:layout_marginBottom="32dp"
+        android:clickable="true"
+        android:onClick="deleteTerm"
+        app:backgroundTint="@color/colorPrimary"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:srcCompat="@android:drawable/ic_menu_delete" />
 </androidx.constraintlayout.widget.ConstraintLayout>

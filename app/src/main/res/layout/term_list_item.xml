@@ -9,8 +9,7 @@
     <androidx.cardview.widget.CardView
         android:id="@+id/term_list_cv"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        >
+        android:layout_height="wrap_content">
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:id="@+id/relativeLayout"
@@ -25,11 +24,11 @@
                 android:layout_marginTop="4dp"
                 android:layout_marginEnd="8dp"
                 android:layout_marginRight="8dp"
-                android:layout_toStartOf="@+id/edit_term_fab"
-                android:layout_toLeftOf="@+id/edit_term_fab"
+                android:layout_toStartOf="@+id/delete_term_fab"
+                android:layout_toLeftOf="@+id/delete_term_fab"
                 android:text="Title"
                 android:textSize="30sp"
-                app:layout_constraintEnd_toStartOf="@+id/edit_term_fab"
+                app:layout_constraintEnd_toStartOf="@+id/delete_term_fab"
                 app:layout_constraintHorizontal_bias="1.0"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
@@ -57,10 +56,12 @@
                 tools:text="5-1-2021" />
 
             <com.google.android.material.floatingactionbutton.FloatingActionButton
-                android:id="@+id/edit_term_fab"
+                android:id="@+id/delete_term_fab"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_alignParentTop="true"
+                android:layout_marginEnd="24dp"
+                android:layout_marginRight="24dp"
                 android:backgroundTint="@color/colorPrimary"
                 android:clickable="true"
                 android:tint="#00F10909"
@@ -68,7 +69,7 @@
                 app:fabSize="mini"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintTop_toTopOf="@+id/term_title"
-                app:srcCompat="@android:drawable/ic_menu_edit" />
+                app:srcCompat="@android:drawable/ic_menu_view" />
 
             <TextView
                 android:id="@+id/textView6"

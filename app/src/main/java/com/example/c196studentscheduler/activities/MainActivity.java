@@ -9,6 +9,7 @@ import android.view.View;
 
 import com.example.c196studentscheduler.R;
 import com.example.c196studentscheduler.Term_Activities.TermList;
+import com.example.c196studentscheduler.course_activities.CourseList;
 
 public class MainActivity extends AppCompatActivity {
     private static final String TAG = "MainActivity";

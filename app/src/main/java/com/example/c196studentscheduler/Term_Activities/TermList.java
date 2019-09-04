@@ -13,7 +13,9 @@ import android.view.View;
 
 import com.example.c196studentscheduler.AddTerm;
 import com.example.c196studentscheduler.R;
+import com.example.c196studentscheduler.activities.MainActivity;
 import com.example.c196studentscheduler.adapter.TermListAdapter;
+import com.example.c196studentscheduler.entity.Course;
 import com.example.c196studentscheduler.entity.Term;
 import com.example.c196studentscheduler.viewmodel.TermViewModel;
 
@@ -37,13 +39,19 @@ public class TermList extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_term_list);
-
+        setTitle("Term List");
 
 
         ButterKnife.bind(this);
         initRecyclerView();
         initViewModel();
 
+    }
+
+    @Override
+    public void onBackPressed () {
+        Intent intent = new Intent(this, MainActivity.class);
+        startActivity(intent);
     }
 
     public void showAddTerm(View view) {
@@ -68,7 +76,6 @@ public class TermList extends AppCompatActivity {
 
         Log.d(TAG, "initViewModel: running");
         termListViewModel = ViewModelProviders.of(this).get(TermViewModel.class);
-       // termListViewModel.addTerms(term1);
         termListViewModel.mTerms.observe(this, termObserver);
     }
 

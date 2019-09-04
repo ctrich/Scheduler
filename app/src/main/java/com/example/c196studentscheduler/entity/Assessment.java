@@ -9,9 +9,12 @@ package com.example.c196studentscheduler.entity;
 
         import java.util.Date;
 
+        import static androidx.room.ForeignKey.CASCADE;
+
 @Entity(tableName = "Assessments", foreignKeys = @ForeignKey(entity = Course.class,
                                                              parentColumns = "CourseId",
-                                                             childColumns = "CourseId"))
+                                                             childColumns = "CourseId",
+                                                             onDelete = CASCADE))
 public class Assessment {
     @PrimaryKey(autoGenerate = true)
     @ColumnInfo(name = "AssessmentId")

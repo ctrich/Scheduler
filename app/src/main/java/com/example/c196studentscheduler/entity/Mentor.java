@@ -3,15 +3,24 @@ package com.example.c196studentscheduler.entity;
 import androidx.annotation.NonNull;
 import androidx.room.ColumnInfo;
 import androidx.room.Entity;
+import androidx.room.ForeignKey;
 import androidx.room.Ignore;
 import androidx.room.Index;
 import androidx.room.PrimaryKey;
 
-@Entity(tableName = "Mentors", indices = {@Index(value = "Phone", unique = true)})
+import static androidx.room.ForeignKey.CASCADE;
+
+@Entity(tableName = "Mentors", indices = {@Index(value = "Phone", unique = true)}, foreignKeys=@ForeignKey(entity = Course.class,
+                                                                                                        parentColumns = "CourseId",
+                                                                                                        childColumns = "CourseId",
+                                                                                                        onDelete = CASCADE))
 public class Mentor {
     @PrimaryKey(autoGenerate = true)
     @ColumnInfo(name = "MentorId")
     private int mentorId;
+
+    @ColumnInfo(name = "CourseId")
+    private int courseID;
 
     @ColumnInfo(name = "Name")
     @NonNull
@@ -25,15 +34,17 @@ public class Mentor {
     @NonNull
     public String eMail;
 
-    public Mentor(int mentorId, String name, String phone, String eMail) {
+    public Mentor(int mentorId,int courseID, String name, String phone, String eMail) {
         this.mentorId = mentorId;
+        this.courseID = courseID;
         this.name = name;
         this.phone = phone;
         this.eMail = eMail;
     }
 
     @Ignore
-    public Mentor(String name, String phone, String eMail) {
+    public Mentor(int courseID, String name, String phone, String eMail) {
+        this.courseID = courseID;
         this.name = name;
         this.phone = phone;
         this.eMail = eMail;
@@ -76,5 +87,13 @@ public class Mentor {
 
     public void seteMail(@NonNull String eMail) {
         this.eMail = eMail;
+    }
+
+    public int getCourseID() {
+        return courseID;
+    }
+
+    public void setCourseID(int courseID) {
+        this.courseID = courseID;
     }
 }

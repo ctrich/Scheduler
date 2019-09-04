@@ -12,6 +12,7 @@ import androidx.annotation.NonNull;
 import androidx.cardview.widget.CardView;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.example.c196studentscheduler.TermDetails;
 import com.example.c196studentscheduler.Term_Activities.EditTerm;
 import com.example.c196studentscheduler.R;
 import com.example.c196studentscheduler.entity.Term;
@@ -54,10 +55,11 @@ public class TermListAdapter extends RecyclerView.Adapter<TermListAdapter.ViewHo
         holder.mTermEnd.setText(eDate);
 
         holder.mFab.setOnClickListener(view -> {
-            Intent intent = new Intent(context, EditTerm.class);
+            Intent intent = new Intent(context, TermDetails.class);
             intent.putExtra("term_id_key", term.getTermId());
             context.startActivity(intent);
         });
+
     }
 
     @Override
@@ -79,7 +81,7 @@ public class TermListAdapter extends RecyclerView.Adapter<TermListAdapter.ViewHo
         TextView mTermStart;
         @BindView(R.id.term_end)
         TextView mTermEnd;
-        @BindView(R.id.edit_term_fab)
+        @BindView(R.id.delete_term_fab)
         FloatingActionButton mFab;
 
         public ViewHolder(@NonNull View itemView) {

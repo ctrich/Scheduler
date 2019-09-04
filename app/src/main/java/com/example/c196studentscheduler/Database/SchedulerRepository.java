@@ -31,6 +31,8 @@ public class SchedulerRepository {
     private AssessmentDAO assessmentDAO;
 
     public LiveData<List<Term>> mTerms;
+    public List<Term> listTerms;
+    public LiveData<List<Course>> mCourses;
     private SchedulerRoomDatabase mDb;
     private Executor executor = Executors.newSingleThreadExecutor();
 
@@ -63,7 +65,10 @@ public class SchedulerRepository {
         Log.d(TAG, "SchedulerRepository: running" + context);
         mDb = SchedulerRoomDatabase.getDatabase(context);
         termDAO = mDb.termDAO();
+        courseDAO = mDb.courseDAO();
+        mCourses = getAllCourses();
         mTerms = getAllTerms();
+        getTerms();
     }
 
 
@@ -71,6 +76,16 @@ public class SchedulerRepository {
     //return all
     public LiveData<List<Term>> getAllTerms() {
         return termDAO.getAllTerms();
+    }
+
+    public void getTerms() {
+        executor.execute(new Runnable() {
+            @Override
+            public void run() {
+                listTerms = termDAO.getTerms();
+            }
+        });
+
     }
 
     public LiveData<List<Course>> getAllCourses() {
@@ -96,7 +111,7 @@ public class SchedulerRepository {
         }
 
         public void createCourse(Course course) {
-            courseDAO.insertCourse(course);
+            mDb.courseDAO().insertCourse(course);
         }
 
         public void createMentor(Mentor mentor) {
@@ -159,6 +174,10 @@ public class SchedulerRepository {
         return termDAO.getTermById(termId);
     }
 
+    public String getTermNameById(int termId) {
+        return courseDAO.getTermNameByTermId(termId);
+    }
+
     public LiveData<Course> getCourseByid(int courseId) {
         return courseDAO.getCourseById(courseId);
     }
@@ -180,9 +199,6 @@ public class SchedulerRepository {
         return courseDAO.getCoursesByTerm(termId);
     }
 
-    public LiveData<List<Mentor>> getMentorsByCourseId(int courseId) {
-        return mentorDAO.getMentorsByCourseId(courseId);
-    }
 
     public LiveData<List<Note>> getNotesByCourseId(int courseId) {
         return noteDAO.getNoteByCourseId(courseId);

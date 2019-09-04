@@ -7,9 +7,12 @@ import androidx.room.ForeignKey;
 import androidx.room.Ignore;
 import androidx.room.PrimaryKey;
 
+import static androidx.room.ForeignKey.CASCADE;
+
 @Entity(tableName = "Notes", foreignKeys = @ForeignKey(entity = Course.class,
                                                        parentColumns = "CourseId",
-                                                       childColumns = "CourseId"))
+                                                       childColumns = "CourseId",
+                                                        onDelete = CASCADE))
 public class Note {
     @PrimaryKey(autoGenerate = true)
     @ColumnInfo(name = "NoteId")

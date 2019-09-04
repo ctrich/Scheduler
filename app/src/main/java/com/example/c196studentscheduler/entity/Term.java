@@ -69,5 +69,6 @@ public class Term {
     public void setEndDate(Date endDate) {
         this.endDate = endDate;
     }
+
 }
 

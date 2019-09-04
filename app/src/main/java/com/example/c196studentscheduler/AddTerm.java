@@ -5,7 +5,6 @@ import androidx.lifecycle.ViewModelProviders;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.text.Editable;
 import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
@@ -16,7 +15,6 @@ import com.example.c196studentscheduler.viewmodel.TermViewModel;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
-import java.util.Calendar;
 import java.util.Date;
 
 import butterknife.BindView;
@@ -53,6 +51,11 @@ public class AddTerm extends AppCompatActivity {
                 .get(TermViewModel .class);
     }
 
+    @Override
+    public void onBackPressed () {
+        Intent intent = new Intent(this, TermList.class);
+        startActivity(intent);
+    }
 
     public void saveTerm(View view) throws ParseException {
         Log.d(TAG, "saveTerm: ");
