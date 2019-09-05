@@ -23,12 +23,16 @@ public class TermViewModel extends AndroidViewModel {
     private SchedulerRepository schedulerRepository;
     private Executor executor = Executors.newSingleThreadExecutor();
 
+
+
     public TermViewModel(@NonNull Application application) {
         super(application);
         schedulerRepository = SchedulerRepository.getInstance(application.getApplicationContext());
         mTerms = schedulerRepository.mTerms;
         listTerms = schedulerRepository.listTerms;
     }
+
+
 
     public void addTerms(Term term) {
         schedulerRepository.createTerm(term);

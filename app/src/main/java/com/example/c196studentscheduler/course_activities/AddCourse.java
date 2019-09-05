@@ -16,7 +16,9 @@ import com.example.c196studentscheduler.R;
 
 import com.example.c196studentscheduler.entity.Course;
 import com.example.c196studentscheduler.entity.Term;
+import com.example.c196studentscheduler.util.Constants;
 import com.example.c196studentscheduler.viewmodel.CourseViewModel;
+import com.example.c196studentscheduler.viewmodel.CourseViewModelFactory;
 import com.example.c196studentscheduler.viewmodel.TermViewModel;
 
 
@@ -45,6 +47,8 @@ public class AddCourse extends AppCompatActivity {
     private Course currentCourse;
     CourseViewModel courseViewModel;
     TermViewModel termViewModel;
+    private int termId;
+
 
 
 
@@ -52,18 +56,19 @@ public class AddCourse extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_add_course);
+        setTitle(Constants.COURSE_ADD_TITLE);
         ButterKnife.bind(this);
         initViewModel();
-
-
-
     }
 
     private void initViewModel() {
-        courseViewModel = ViewModelProviders.of(this)
+        CourseViewModelFactory factory = new CourseViewModelFactory(this.getApplication());
+        courseViewModel = ViewModelProviders.of(this, factory)
                 .get(CourseViewModel.class);
         termViewModel = ViewModelProviders.of(this)
                 .get(TermViewModel.class);
+        Bundle extras = getIntent().getExtras();
+        termId = extras.getInt(Constants.TERM_ID_KEY);
     }
 
     public void saveCourse(View view) throws ParseException {
@@ -75,17 +80,19 @@ public class AddCourse extends AppCompatActivity {
 
         Date startD = convertStringToDate(sd);
         Date endD = convertStringToDate(ed);
-       // currentCourse = new Course(courseName, term.getTermId(),status, startD, endD);
+        currentCourse = new Course(courseName, termId,status, startD, endD);
 
 
         courseViewModel.addCourse(currentCourse);
 
         Intent intent = new Intent(this, CourseList.class);
+        intent.putExtra(Constants.TERM_ID_KEY, termId);
         startActivity(intent);
     }
 
     public void cancelAdd(View view) {
         Intent intent = new Intent(this, CourseList.class);
+        intent.putExtra(Constants.TERM_ID_KEY, termId);
         startActivity(intent);
     }
 

@@ -18,6 +18,7 @@ import com.example.c196studentscheduler.entity.Course;
 import com.example.c196studentscheduler.entity.Mentor;
 import com.example.c196studentscheduler.entity.Note;
 import com.example.c196studentscheduler.entity.Term;
+import com.example.c196studentscheduler.util.DateConverter;
 
 @Database(entities = {Term.class, Course.class, Mentor.class, Note.class, Assessment.class}, version = 4)
 @TypeConverters({DateConverter.class})

@@ -178,7 +178,7 @@ public class SchedulerRepository {
         return courseDAO.getTermNameByTermId(termId);
     }
 
-    public LiveData<Course> getCourseByid(int courseId) {
+    public Course getCourseByid(int courseId) {
         return courseDAO.getCourseById(courseId);
     }
 

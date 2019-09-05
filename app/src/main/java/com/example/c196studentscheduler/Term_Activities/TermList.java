@@ -11,16 +11,14 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 
-import com.example.c196studentscheduler.AddTerm;
 import com.example.c196studentscheduler.R;
 import com.example.c196studentscheduler.activities.MainActivity;
 import com.example.c196studentscheduler.adapter.TermListAdapter;
-import com.example.c196studentscheduler.entity.Course;
 import com.example.c196studentscheduler.entity.Term;
+import com.example.c196studentscheduler.util.Constants;
 import com.example.c196studentscheduler.viewmodel.TermViewModel;
 
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 
 import butterknife.BindView;
@@ -39,7 +37,7 @@ public class TermList extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_term_list);
-        setTitle("Term List");
+        setTitle(Constants.TERM_LIST_TITLE);
 
 
         ButterKnife.bind(this);

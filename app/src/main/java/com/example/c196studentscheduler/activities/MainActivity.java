@@ -10,9 +10,10 @@ import android.view.View;
 import com.example.c196studentscheduler.R;
 import com.example.c196studentscheduler.Term_Activities.TermList;
 import com.example.c196studentscheduler.course_activities.CourseList;
+import com.example.c196studentscheduler.util.Constants;
 
 public class MainActivity extends AppCompatActivity {
-    private static final String TAG = "MainActivity";
+
 
 
 
@@ -20,10 +21,11 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        setTitle(Constants.HOME_SCREEN_TITLE);
     }
 
     public void showTerm(View view) {
-        Log.d(TAG, "showTerm: running");
+
         Intent i = new Intent(this, TermList.class);
         startActivity(i);
     }

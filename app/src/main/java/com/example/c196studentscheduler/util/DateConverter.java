@@ -1,4 +1,4 @@
-package com.example.c196studentscheduler.Database;
+package com.example.c196studentscheduler.util;
 
 import androidx.room.TypeConverter;
 

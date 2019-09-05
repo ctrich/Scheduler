@@ -1,4 +1,4 @@
-package com.example.c196studentscheduler;
+package com.example.c196studentscheduler.Term_Activities;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.lifecycle.ViewModelProviders;
@@ -9,8 +9,10 @@ import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
 
-import com.example.c196studentscheduler.Term_Activities.TermList;
+import com.example.c196studentscheduler.R;
+
 import com.example.c196studentscheduler.entity.Term;
+import com.example.c196studentscheduler.util.Constants;
 import com.example.c196studentscheduler.viewmodel.TermViewModel;
 
 import java.text.ParseException;
@@ -41,6 +43,7 @@ public class AddTerm extends AppCompatActivity {
         Log.d(TAG, "onCreate: ");
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_add_term);
+        setTitle(Constants.TERM_ADD_TITLE);
 
         ButterKnife.bind(this);
         initViewModel();

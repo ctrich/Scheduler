@@ -11,10 +11,12 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 
+import com.example.c196studentscheduler.R;
 import com.example.c196studentscheduler.Term_Activities.EditTerm;
 import com.example.c196studentscheduler.Term_Activities.TermList;
 import com.example.c196studentscheduler.course_activities.CourseList;
 import com.example.c196studentscheduler.entity.Term;
+import com.example.c196studentscheduler.util.Constants;
 import com.example.c196studentscheduler.viewmodel.TermViewModel;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
@@ -45,7 +47,7 @@ public class TermDetails extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_term_details);
-        setTitle("Term Details");
+        setTitle(Constants.TERM_DETAILS_TITLE);
         ButterKnife.bind(this);
         initViewModel();
     }
@@ -67,12 +69,13 @@ public class TermDetails extends AppCompatActivity {
             }
         });
         Bundle extras = getIntent().getExtras();
-            termId = extras.getInt("term_id_key");
+            termId = extras.getInt(Constants.TERM_ID_KEY);
             termViewModel.loadData(termId);
     }
 
     public void showCourses(View view) {
         Intent intent = new Intent(this, CourseList.class);
+        intent.putExtra(Constants.TERM_ID_KEY, termId);
         startActivity(intent);
     }
 
@@ -84,26 +87,26 @@ public class TermDetails extends AppCompatActivity {
 
     public void editTerm(View view) {
         Intent intent = new Intent(this, EditTerm.class);
-        intent.putExtra("term_id_key", termId);
+        intent.putExtra(Constants.TERM_ID_KEY, termId);
         startActivity(intent);
     }
 
 
-    public void updateTerm(View view) {
-        String sd = editSDate.getText().toString();
-        String ed = editEDate.getText().toString();
-        try {
-            Date startD = convertStringToDate(sd);
-            Date endD = convertStringToDate(ed);
-            currentTerm = new Term(termId, editTitle.getText().toString(), startD, endD);
-            termViewModel.updateTerm(currentTerm);
-        } catch (ParseException e) {
-            e.printStackTrace();
-        }
-
-        Intent intent = new Intent(this, TermList.class);
-        startActivity(intent);
-    }
+//    public void updateTerm(View view) {
+//        String sd = editSDate.getText().toString();
+//        String ed = editEDate.getText().toString();
+//        try {
+//            Date startD = convertStringToDate(sd);
+//            Date endD = convertStringToDate(ed);
+//            currentTerm = new Term(termId, editTitle.getText().toString(), startD, endD);
+//            termViewModel.updateTerm(currentTerm);
+//        } catch (ParseException e) {
+//            e.printStackTrace();
+//        }
+//
+//        Intent intent = new Intent(this, TermList.class);
+//        startActivity(intent);
+//    }
 
     public String convertDateToString(Date sDate)  {
         DateFormat dateFormat = new SimpleDateFormat("MM/dd/yyyy");

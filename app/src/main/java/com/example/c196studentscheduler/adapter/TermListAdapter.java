@@ -13,9 +13,9 @@ import androidx.cardview.widget.CardView;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.c196studentscheduler.TermDetails;
-import com.example.c196studentscheduler.Term_Activities.EditTerm;
 import com.example.c196studentscheduler.R;
 import com.example.c196studentscheduler.entity.Term;
+import com.example.c196studentscheduler.util.Constants;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 import java.text.SimpleDateFormat;
@@ -56,7 +56,7 @@ public class TermListAdapter extends RecyclerView.Adapter<TermListAdapter.ViewHo
 
         holder.mFab.setOnClickListener(view -> {
             Intent intent = new Intent(context, TermDetails.class);
-            intent.putExtra("term_id_key", term.getTermId());
+            intent.putExtra(Constants.TERM_ID_KEY, term.getTermId());
             context.startActivity(intent);
         });
 

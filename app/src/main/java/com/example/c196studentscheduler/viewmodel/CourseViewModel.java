@@ -16,18 +16,51 @@ import java.util.concurrent.Executors;
 
 public class CourseViewModel extends AndroidViewModel {
 
+    public MutableLiveData<Course> mLiveCourse = new MutableLiveData<>();
     public LiveData<List<Course>> mCourses;
-    public MutableLiveData<Course> mLiveTerm = new MutableLiveData<>();
+    public LiveData<List<Course>> mCourseByTerm;
     private SchedulerRepository schedulerRepository;
     private Executor executor = Executors.newSingleThreadExecutor();
 
-    public CourseViewModel(@NonNull Application application) {
+    public CourseViewModel(@NonNull Application application, int termId) {
         super(application);
         schedulerRepository = SchedulerRepository.getInstance(application.getApplicationContext());
+        mCourseByTerm = schedulerRepository.getCoursesByTermId(termId);
         mCourses = schedulerRepository.mCourses;
     }
 
+
+
     public  void addCourse(Course course) {
         executor.execute(() -> schedulerRepository.createCourse(course));
+    }
+
+    public void updateCourse(Course course) {
+        executor.execute(new Runnable() {
+            @Override
+            public void run() {
+                schedulerRepository.updateCourse(course);
+            }
+        });
+    }
+
+    public void deleteCourse(Course course) {
+        executor.execute(new Runnable() {
+            @Override
+            public void run() {
+                schedulerRepository.deleteCourse(course);
+            }
+        });
+    }
+
+    public void loadData(int courseId) {
+        executor.execute(new Runnable() {
+            @Override
+            public void run() {
+                Course course = schedulerRepository.getCourseByid(courseId);
+                mLiveCourse.postValue(course);
+            }
+        });
+
     }
 }

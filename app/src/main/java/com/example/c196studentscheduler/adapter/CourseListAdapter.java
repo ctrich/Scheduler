@@ -1,6 +1,8 @@
 package com.example.c196studentscheduler.adapter;
 
 import android.content.Context;
+
+
 import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -12,8 +14,10 @@ import androidx.cardview.widget.CardView;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.c196studentscheduler.R;
+import com.example.c196studentscheduler.course_activities.CourseDetails;
 import com.example.c196studentscheduler.entity.Course;
-import com.example.c196studentscheduler.entity.Term;
+
+import com.example.c196studentscheduler.util.Constants;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 import java.text.SimpleDateFormat;
@@ -42,7 +46,7 @@ public class CourseListAdapter extends RecyclerView.Adapter<CourseListAdapter.Vi
 
     @Override
     public void onBindViewHolder(@NonNull CourseListAdapter.ViewHolder holder, int position) {
-        final Course term = mCourse.get(position);
+        final Course course = mCourse.get(position);
         SimpleDateFormat sdf = new SimpleDateFormat("MM-dd-yyyy");
 
         String sDate = sdf.format(mCourse.get(position).getStartDate());
@@ -53,11 +57,11 @@ public class CourseListAdapter extends RecyclerView.Adapter<CourseListAdapter.Vi
         holder.courseEnd.setText(eDate);
         holder.courseStatus.setText(mCourse.get(position).getStatus());
 
-//        holder.fab.setOnClickListener(view -> {
-//            Intent intent = new Intent(context, EditCourse.class);
-//            intent.putExtra("term_id_key", term.getTermId());
-//            context.startActivity(intent);
-//        });
+        holder.fab.setOnClickListener(view -> {
+            Intent intent = new Intent(context, CourseDetails.class);
+            intent.putExtra(Constants.COURSE_ID_KEY, course.getCourseId());
+            context.startActivity(intent);
+        });
    }
 
     @Override
@@ -67,7 +71,7 @@ public class CourseListAdapter extends RecyclerView.Adapter<CourseListAdapter.Vi
 
     @Override
     public int getItemCount() {
-        return 0;
+        return mCourse.size();
     }
 
     public class ViewHolder extends RecyclerView.ViewHolder {

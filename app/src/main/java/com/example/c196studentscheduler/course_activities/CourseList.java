@@ -8,12 +8,15 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 
 import com.example.c196studentscheduler.R;
 import com.example.c196studentscheduler.adapter.CourseListAdapter;
 import com.example.c196studentscheduler.entity.Course;
+import com.example.c196studentscheduler.util.Constants;
 import com.example.c196studentscheduler.viewmodel.CourseViewModel;
+import com.example.c196studentscheduler.viewmodel.CourseViewModelFactory;
 
 import java.util.ArrayList;
 import java.util.Date;
@@ -23,23 +26,28 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 
 public class CourseList extends AppCompatActivity {
+    private static final String TAG = "CourseList";
+
 
     @BindView(R.id.list_course_recycler)
     RecyclerView recyclerView;
     private List<Course> courseData = new ArrayList<>();
     private CourseListAdapter mAdapter;
     private CourseViewModel courseViewModel;
-    String name = "name";
-    int termId = 1;
-    String status = "complete";
-    Date date = new Date();
+    private int termId;
+
+
+
 
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_course_list);
-        setTitle("Course List");
+        setTitle(Constants.COURSE_LIST_TITLE);
+
+        Bundle extras = getIntent().getExtras();
+        termId = extras.getInt(Constants.TERM_ID_KEY);
 
 
         ButterKnife.bind(this);
@@ -48,25 +56,28 @@ public class CourseList extends AppCompatActivity {
     }
 
     private void initViewModel() {
-
-        final Observer<List<Course>> termObserver = terms -> {
-            courseData.clear();
-            courseData.addAll(terms);
-            if (mAdapter == null) {
-                mAdapter = new CourseListAdapter(courseData, CourseList.this);
-                recyclerView.setAdapter(mAdapter);
-            }else {
-                mAdapter.notifyDataSetChanged();
+        final Observer<List<Course>> courseObserver = new Observer<List<Course>>() {
+            @Override
+            public void onChanged(List<Course> courses) {
+                courseData.clear();
+                courseData.addAll(courses);
+                if (mAdapter == null) {
+                    mAdapter = new CourseListAdapter(courseData, CourseList.this);
+                    recyclerView.setAdapter(mAdapter);
+                }else {
+                    mAdapter.notifyDataSetChanged();
+                }
             }
-
         };
-
-        courseViewModel = ViewModelProviders.of(this).get(CourseViewModel.class);
-        courseViewModel.mCourses.observe(this, termObserver);
+        CourseViewModelFactory factory = new CourseViewModelFactory(this.getApplication(), termId);
+        Log.d(TAG, "initViewModel: " + termId);
+        courseViewModel = ViewModelProviders.of(this, factory).get(CourseViewModel.class);
+        courseViewModel.mCourseByTerm.observe(this, courseObserver);
     }
 
     public void showAddCourse(View view) {
         Intent intent = new Intent(this, AddCourse.class);
+        intent.putExtra(Constants.TERM_ID_KEY, termId);
         startActivity(intent);
     }
 

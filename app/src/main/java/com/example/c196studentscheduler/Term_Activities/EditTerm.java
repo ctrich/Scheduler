@@ -15,6 +15,7 @@ import android.widget.EditText;
 import com.example.c196studentscheduler.R;
 import com.example.c196studentscheduler.TermDetails;
 import com.example.c196studentscheduler.entity.Term;
+import com.example.c196studentscheduler.util.Constants;
 import com.example.c196studentscheduler.viewmodel.TermViewModel;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
@@ -53,6 +54,7 @@ public class EditTerm extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_edit_term);
+        setTitle(Constants.TERM_EDIT_TITLE);
 
         ButterKnife.bind(this);
         initViewModel();
@@ -77,11 +79,11 @@ public class EditTerm extends AppCompatActivity {
         });
         Bundle extras = getIntent().getExtras();
         if (extras == null) {
-            setTitle("New Term");
+
             mNewTerm = true;
         } else {
-            setTitle("Edit Term");
-            termId = extras.getInt("term_id_key");
+
+            termId = extras.getInt(Constants.TERM_ID_KEY);
             termViewModel.loadData(termId);
         }
     }
@@ -105,7 +107,7 @@ public class EditTerm extends AppCompatActivity {
             e.printStackTrace();
         }
         Intent intent = new Intent(this, TermDetails.class);
-        intent.putExtra("term_id_key", termId);
+        intent.putExtra(Constants.TERM_ID_KEY, termId);
         startActivity(intent);
     }
 
@@ -117,7 +119,8 @@ public class EditTerm extends AppCompatActivity {
     }
 
     public void cancelEdit(View view) {
-        Intent intent = new Intent(this, TermList.class);
+        Intent intent = new Intent(this, TermDetails.class);
+        intent.putExtra(Constants.TERM_ID_KEY, termId);
         startActivity(intent);
     }
 

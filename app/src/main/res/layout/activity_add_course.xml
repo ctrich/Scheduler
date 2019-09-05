@@ -21,8 +21,8 @@
         android:id="@+id/textView10"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="24dp"
-        android:layout_marginLeft="24dp"
+        android:layout_marginStart="32dp"
+        android:layout_marginLeft="32dp"
         android:layout_marginTop="50dp"
         android:text="Course TItle"
         android:textSize="16sp"
@@ -41,14 +41,13 @@
 
     <TextView
         android:id="@+id/textView13"
-        android:textSize="16sp"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginEnd="8dp"
-        android:layout_marginRight="8dp"
+        android:layout_marginTop="32dp"
         android:text="End Date:"
-        app:layout_constraintBaseline_toBaselineOf="@+id/add_course_sdate"
-        app:layout_constraintEnd_toStartOf="@+id/add_course_edate" />
+        android:textSize="16sp"
+        app:layout_constraintStart_toStartOf="@+id/textView12"
+        app:layout_constraintTop_toBottomOf="@+id/textView12" />
 
     <EditText
         android:id="@+id/add_course_sdate"
@@ -56,7 +55,7 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="8dp"
         android:layout_marginLeft="8dp"
-        android:hint="Start Date"
+        android:hint="MM/DD/YYYY"
         app:layout_constraintBaseline_toBaselineOf="@+id/textView12"
         app:layout_constraintStart_toEndOf="@+id/textView12" />
 
@@ -64,18 +63,18 @@
         android:id="@+id/add_course_edate"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginEnd="44dp"
-        android:layout_marginRight="44dp"
-        android:hint="End Date"
+        android:layout_marginStart="8dp"
+        android:layout_marginLeft="8dp"
+        android:hint="MM/DD/YYYY"
         app:layout_constraintBaseline_toBaselineOf="@+id/textView13"
-        app:layout_constraintEnd_toEndOf="parent" />
+        app:layout_constraintStart_toEndOf="@+id/textView13" />
 
     <Button
         android:id="@+id/add_course_save"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="88dp"
-        android:layout_marginLeft="88dp"
+        android:layout_marginStart="36dp"
+        android:layout_marginLeft="36dp"
         android:layout_marginTop="100dp"
         android:onClick="saveCourse"
         android:text="Save"
@@ -101,7 +100,7 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="8dp"
         android:layout_marginLeft="8dp"
-        android:hint="Status"
+        android:hint="In Progress"
         app:layout_constraintBaseline_toBaselineOf="@+id/textView16"
         app:layout_constraintStart_toEndOf="@+id/textView16" />
 
@@ -119,8 +118,30 @@
         android:id="@+id/button6"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginEnd="16dp"
+        android:layout_marginRight="16dp"
         android:text="Cancel"
-        app:layout_constraintBaseline_toBaselineOf="@+id/add_course_save"
+        app:layout_constraintBaseline_toBaselineOf="@+id/add_course_mentor"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/add_course_mentor" />
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/add_course_mentor_recycler"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_marginTop="8dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/add_course_save" />
+
+    <Button
+        android:id="@+id/add_course_mentor"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="24dp"
+        android:layout_marginLeft="24dp"
+        android:text="Add Mentor"
+        app:layout_constraintBaseline_toBaselineOf="@+id/add_course_save"
         app:layout_constraintStart_toEndOf="@+id/add_course_save" />
 </androidx.constraintlayout.widget.ConstraintLayout>
