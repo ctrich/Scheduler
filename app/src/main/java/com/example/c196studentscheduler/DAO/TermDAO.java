@@ -14,7 +14,7 @@ import java.util.List;
 
 @Dao
 public interface TermDAO {
-    @Insert(onConflict = OnConflictStrategy.REPLACE)
+    @Insert
     void insert(Term term);
 
     @Update

@@ -10,7 +10,7 @@ import androidx.room.PrimaryKey;
 
 import static androidx.room.ForeignKey.CASCADE;
 
-@Entity(tableName = "Mentors", indices = {@Index(value = "Phone", unique = true)}, foreignKeys=@ForeignKey(entity = Course.class,
+@Entity(tableName = "Mentors", foreignKeys=@ForeignKey(entity = Course.class,
                                                                                                         parentColumns = "CourseId",
                                                                                                         childColumns = "CourseId",
                                                                                                         onDelete = CASCADE))

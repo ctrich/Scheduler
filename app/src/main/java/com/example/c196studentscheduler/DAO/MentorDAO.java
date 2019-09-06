@@ -14,7 +14,7 @@ import java.util.List;
 
 @Dao
 public interface MentorDAO {
-    @Insert(onConflict = OnConflictStrategy.REPLACE)
+    @Insert
     void insertMentor(Mentor mentor);
 
     @Update
@@ -28,5 +28,8 @@ public interface MentorDAO {
 
 
     @Query("SELECT * FROM Mentors WHERE MentorId = :mentorId")
-    LiveData<Mentor> getMentorById(int mentorId);
+    Mentor getMentorById(int mentorId);
+
+    @Query("SELECT * FROM Mentors WHERE CourseId = :courseId")
+    LiveData<List<Mentor>> getMentorsByCourseId(int courseId);
 }

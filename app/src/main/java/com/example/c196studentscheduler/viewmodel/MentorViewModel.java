@@ -8,57 +8,58 @@ import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 
 import com.example.c196studentscheduler.Database.SchedulerRepository;
-import com.example.c196studentscheduler.entity.Course;
+import com.example.c196studentscheduler.entity.Mentor;
 
 import java.util.List;
 import java.util.concurrent.Executor;
 import java.util.concurrent.Executors;
 
-public class CourseViewModel extends AndroidViewModel {
+public class MentorViewModel extends AndroidViewModel {
 
-    public MutableLiveData<Course> mLiveCourse = new MutableLiveData<>();
-    public LiveData<List<Course>> mCourses;
-    public LiveData<List<Course>> mCourseByTerm;
+    public MutableLiveData<Mentor> mLiveMentor = new MutableLiveData<>();
     private SchedulerRepository schedulerRepository;
     private Executor executor = Executors.newSingleThreadExecutor();
+    public LiveData<List<Mentor>> mMentorsByCourseId;
 
-    public CourseViewModel(@NonNull Application application, int termId) {
+    public MentorViewModel(@NonNull Application application, int courseId) {
         super(application);
         schedulerRepository = SchedulerRepository.getInstance(application.getApplicationContext());
-        mCourseByTerm = schedulerRepository.getCoursesByTermId(termId);
-        mCourses = schedulerRepository.mCourses;
+        mMentorsByCourseId = schedulerRepository.getMentorByCourseId(courseId);
     }
 
-
-
-    public void addCourse(Course course) {
-        executor.execute(() -> schedulerRepository.createCourse(course));
-    }
-
-    public void updateCourse(Course course) {
+    public void addMentor(Mentor mentor) {
         executor.execute(new Runnable() {
             @Override
             public void run() {
-                schedulerRepository.updateCourse(course);
+                schedulerRepository.createMentor(mentor);
             }
         });
     }
 
-    public void deleteCourse(Course course) {
+    public void updateMentor(Mentor mentor) {
         executor.execute(new Runnable() {
             @Override
             public void run() {
-                schedulerRepository.deleteCourse(course);
+                schedulerRepository.updateMentor(mentor);
             }
         });
     }
 
-    public void loadData(int courseId) {
+    public void deleteMentor(Mentor mentor) {
         executor.execute(new Runnable() {
             @Override
             public void run() {
-                Course course = schedulerRepository.getCourseByid(courseId);
-                mLiveCourse.postValue(course);
+                schedulerRepository.deleteMentor(mentor);
+            }
+        });
+    }
+
+    public void loadData(int mentorId) {
+        executor.execute(new Runnable() {
+            @Override
+            public void run() {
+                Mentor mentor = schedulerRepository.getMentorByid(mentorId);
+                mLiveMentor.postValue(mentor);
             }
         });
 

@@ -16,6 +16,7 @@ import com.example.c196studentscheduler.R;
 
 import com.example.c196studentscheduler.entity.Course;
 import com.example.c196studentscheduler.entity.Term;
+import com.example.c196studentscheduler.mentor_activities.AddMentor;
 import com.example.c196studentscheduler.util.Constants;
 import com.example.c196studentscheduler.viewmodel.CourseViewModel;
 import com.example.c196studentscheduler.viewmodel.CourseViewModelFactory;
@@ -44,6 +45,8 @@ public class AddCourse extends AppCompatActivity {
     EditText courseSatus;
     @BindView(R.id.add_course_save)
     Button saveBtn;
+
+
     private Course currentCourse;
     CourseViewModel courseViewModel;
     TermViewModel termViewModel;
@@ -81,8 +84,6 @@ public class AddCourse extends AppCompatActivity {
         Date startD = convertStringToDate(sd);
         Date endD = convertStringToDate(ed);
         currentCourse = new Course(courseName, termId,status, startD, endD);
-
-
         courseViewModel.addCourse(currentCourse);
 
         Intent intent = new Intent(this, CourseList.class);

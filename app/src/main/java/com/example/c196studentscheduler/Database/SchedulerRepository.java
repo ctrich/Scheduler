@@ -66,6 +66,7 @@ public class SchedulerRepository {
         mDb = SchedulerRoomDatabase.getDatabase(context);
         termDAO = mDb.termDAO();
         courseDAO = mDb.courseDAO();
+        mentorDAO = mDb.mentorDAO();
         mCourses = getAllCourses();
         mTerms = getAllTerms();
         getTerms();
@@ -115,7 +116,7 @@ public class SchedulerRepository {
         }
 
         public void createMentor(Mentor mentor) {
-            mentorDAO.insertMentor(mentor);
+           mDb.mentorDAO().insertMentor(mentor);
         }
 
         public void createNote(Note note) {
@@ -158,7 +159,7 @@ public class SchedulerRepository {
     }
 
     public void deleteMentor(Mentor mentor) {
-        mentorDAO.deleteMentor(mentor);
+        mDb.mentorDAO().deleteMentor(mentor);;
     }
 
     public void deleteNote(Note note) {
@@ -182,7 +183,7 @@ public class SchedulerRepository {
         return courseDAO.getCourseById(courseId);
     }
 
-    public LiveData<Mentor> getMentorByid(int mentorId) {
+    public Mentor getMentorByid(int mentorId) {
         return mentorDAO.getMentorById(mentorId);
     }
 
@@ -199,11 +200,13 @@ public class SchedulerRepository {
         return courseDAO.getCoursesByTerm(termId);
     }
 
-
     public LiveData<List<Note>> getNotesByCourseId(int courseId) {
         return noteDAO.getNoteByCourseId(courseId);
     }
 
+    public LiveData<List<Mentor>> getMentorByCourseId(int courseId) {
+        return mentorDAO.getMentorsByCourseId(courseId);
+    }
     public LiveData<List<Assessment>> getAssessmentByCourseId(int courseId) {
         return assessmentDAO.getAssessmentsByCourseId(courseId);
     }

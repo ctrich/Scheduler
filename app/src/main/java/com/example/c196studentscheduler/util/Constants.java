@@ -11,6 +11,8 @@ public class Constants {
     public static final String COURSE_LIST_TITLE = "Course List";
     public static final String COURSE_ADD_TITLE = "Add Course";
     public static final String COURSE_ID_KEY = "course_key_id";
+    public static final String MENTOR_ADD_TITLE = "Add Mentor";
+    public static final String MENTOR_ID_KEY = "mentor_id_key";
 }
 
 

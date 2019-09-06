@@ -20,7 +20,7 @@ import com.example.c196studentscheduler.entity.Note;
 import com.example.c196studentscheduler.entity.Term;
 import com.example.c196studentscheduler.util.DateConverter;
 
-@Database(entities = {Term.class, Course.class, Mentor.class, Note.class, Assessment.class}, version = 4)
+@Database(entities = {Term.class, Course.class, Mentor.class, Note.class, Assessment.class}, version = 5)
 @TypeConverters({DateConverter.class})
 public abstract class SchedulerRoomDatabase extends RoomDatabase {
     private static final String TAG = "SchedulerRoomDatabase";

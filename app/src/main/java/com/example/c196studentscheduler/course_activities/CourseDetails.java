@@ -3,6 +3,8 @@ package com.example.c196studentscheduler.course_activities;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProviders;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -11,15 +13,22 @@ import android.widget.Button;
 import android.widget.TextView;
 
 import com.example.c196studentscheduler.R;
+import com.example.c196studentscheduler.adapter.MentorListAdapter;
 import com.example.c196studentscheduler.entity.Course;
+import com.example.c196studentscheduler.entity.Mentor;
+import com.example.c196studentscheduler.mentor_activities.AddMentor;
 import com.example.c196studentscheduler.util.Constants;
 import com.example.c196studentscheduler.viewmodel.CourseViewModel;
 import com.example.c196studentscheduler.viewmodel.CourseViewModelFactory;
+import com.example.c196studentscheduler.viewmodel.MentorViewModel;
+import com.example.c196studentscheduler.viewmodel.MentorViewModelFactory;
 
 import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -39,8 +48,16 @@ public class CourseDetails extends AppCompatActivity {
     @BindView(R.id.course_d_note_btn)
     Button viewNote;
     CourseViewModel courseViewModel;
+    @BindView(R.id.mentor_list_recycler)
+    RecyclerView mRecyclerView;
+
     private int termId;
     private int courseId;
+    private List<Mentor> mentorData = new ArrayList<>();
+    private MentorListAdapter mAdapter;
+    MentorViewModelFactory mentorFactory;
+    MentorViewModel mentorViewModel;
+
 
 
     @Override
@@ -50,6 +67,7 @@ public class CourseDetails extends AppCompatActivity {
 //        setTitle(Constants.);
 
         ButterKnife.bind(this);
+        initRecyclerView();
         initViewModel();
     }
 
@@ -69,9 +87,35 @@ public class CourseDetails extends AppCompatActivity {
                 termId = course.getTermId();
             }
         });
+
         Bundle extras = getIntent().getExtras();
         courseId = extras.getInt(Constants.COURSE_ID_KEY);
         courseViewModel.loadData(courseId);
+
+        mentorFactory = new MentorViewModelFactory(this.getApplication(), courseId);
+        mentorViewModel = ViewModelProviders.of(this, mentorFactory).get(MentorViewModel.class);
+
+        final Observer<List<Mentor>> mentorObserver = new Observer<List<Mentor>>() {
+            @Override
+            public void onChanged(List<Mentor> mentors) {
+                mentorData.clear();
+                mentorData.addAll(mentors);
+                if (mAdapter == null) {
+                    mAdapter = new MentorListAdapter(mentorData, CourseDetails.this, mentorViewModel);
+                    mRecyclerView.setAdapter(mAdapter);
+                } else {
+                    mAdapter.notifyDataSetChanged();
+                }
+            }
+        };
+        mentorViewModel.mMentorsByCourseId.observe(this, mentorObserver);
+    }
+
+    private void initRecyclerView() {
+        mRecyclerView.setHasFixedSize(true);
+        LinearLayoutManager layoutManager = new LinearLayoutManager(this);
+        mRecyclerView.setLayoutManager(layoutManager);
+
     }
 
 //    public void showCourses(View view) {
@@ -93,22 +137,13 @@ public class CourseDetails extends AppCompatActivity {
         startActivity(intent);
     }
 
+    public void goToAddMentor(View view) {
+        Intent intent = new Intent(this, AddMentor.class);
+        intent.putExtra(Constants.COURSE_ID_KEY, courseId);
+        startActivity(intent);
+    }
 
-//    public void updateTerm(View view) {
-//        String sd = editSDate.getText().toString();
-//        String ed = editEDate.getText().toString();
-//        try {
-//            Date startD = convertStringToDate(sd);
-//            Date endD = convertStringToDate(ed);
-//            currentTerm = new Term(termId, editTitle.getText().toString(), startD, endD);
-//            termViewModel.updateTerm(currentTerm);
-//        } catch (ParseException e) {
-//            e.printStackTrace();
-//        }
-//
-//        Intent intent = new Intent(this, TermList.class);
-//        startActivity(intent);
-//    }
+
 
     public String convertDateToString(Date sDate)  {
         DateFormat dateFormat = new SimpleDateFormat("MM/dd/yyyy");

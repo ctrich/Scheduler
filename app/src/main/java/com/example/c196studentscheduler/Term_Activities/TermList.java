@@ -59,7 +59,6 @@ public class TermList extends AppCompatActivity {
     }
 
     private void initViewModel() {
-
         final Observer<List<Term>> termObserver = terms -> {
             termsData.clear();
             termsData.addAll(terms);

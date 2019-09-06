@@ -143,4 +143,14 @@
         app:layout_constraintBottom_toTopOf="@+id/course_d_assess_btn"
         app:layout_constraintTop_toBottomOf="@+id/course_d_end"
         tools:layout_editor_absoluteX="133dp" />
+
+    <Button
+        android:id="@+id/course_d_add_mentor"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:onClick="goToAddMentor"
+        android:text="Add Mentor"
+        app:layout_constraintBottom_toBottomOf="@+id/course_d_end"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/course_d_end" />
 </androidx.constraintlayout.widget.ConstraintLayout>
