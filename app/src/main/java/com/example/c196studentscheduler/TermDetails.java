@@ -115,9 +115,9 @@ public class TermDetails extends AppCompatActivity {
     }
 
 
-    public Date convertStringToDate(String sDate) throws ParseException {
-        SimpleDateFormat simpleDateFormat = new SimpleDateFormat("MM/dd/yyyy");
-        Date date = simpleDateFormat.parse(sDate);
-        return date;
-    }
+//    public Date convertStringToDate(String sDate) throws ParseException {
+//        SimpleDateFormat simpleDateFormat = new SimpleDateFormat("MM/dd/yyyy");
+//        Date date = simpleDateFormat.parse(sDate);
+//        return date;
+//    }
 }

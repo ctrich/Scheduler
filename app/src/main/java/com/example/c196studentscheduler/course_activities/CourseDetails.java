@@ -14,6 +14,7 @@ import android.widget.TextView;
 
 import com.example.c196studentscheduler.R;
 import com.example.c196studentscheduler.adapter.MentorListAdapter;
+import com.example.c196studentscheduler.assessment_activities.AssessmentList;
 import com.example.c196studentscheduler.entity.Course;
 import com.example.c196studentscheduler.entity.Mentor;
 import com.example.c196studentscheduler.mentor_activities.AddMentor;
@@ -143,6 +144,11 @@ public class CourseDetails extends AppCompatActivity {
         startActivity(intent);
     }
 
+    public void viewAssessments(View view) {
+        Intent intent = new Intent(this, AssessmentList.class);
+        intent.putExtra(Constants.COURSE_ID_KEY, courseId);
+        startActivity(intent);
+    }
 
 
     public String convertDateToString(Date sDate)  {

@@ -67,6 +67,7 @@ public class SchedulerRepository {
         termDAO = mDb.termDAO();
         courseDAO = mDb.courseDAO();
         mentorDAO = mDb.mentorDAO();
+        assessmentDAO = mDb.assessmentDAO();
         mCourses = getAllCourses();
         mTerms = getAllTerms();
         getTerms();
@@ -191,7 +192,7 @@ public class SchedulerRepository {
         return noteDAO.getNoteById(noteId);
     }
 
-    public LiveData<Assessment> getAssessmentByid(int assessmentId) {
+    public Assessment getAssessmentByid(int assessmentId) {
         return assessmentDAO.getAssessmentById(assessmentId);
     }
 

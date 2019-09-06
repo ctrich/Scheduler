@@ -1,6 +1,7 @@
 package com.example.c196studentscheduler.adapter;
 
 import android.content.Context;
+import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -10,9 +11,12 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.c196studentscheduler.R;
+import com.example.c196studentscheduler.assessment_activities.AssessmentDetails;
 import com.example.c196studentscheduler.entity.Assessment;
+import com.example.c196studentscheduler.util.Constants;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
+import java.lang.invoke.ConstantCallSite;
 import java.util.List;
 
 import butterknife.BindView;
@@ -40,6 +44,15 @@ public class AssessmentListAdapter extends RecyclerView.Adapter<AssessmentListAd
     public void onBindViewHolder(@NonNull AssessmentListAdapter.ViewHolder holder, int position) {
         holder.title.setText(mAssessment.get(position).getName());
         holder.type.setText(mAssessment.get(position).getType());
+
+        holder.fab.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(context, AssessmentDetails.class);
+                intent.putExtra(Constants.ASSESSMENT_ID_KEY, mAssessment.get(position).getAssessmentId());
+                context.startActivity(intent);
+            }
+        });
     }
 
     @Override

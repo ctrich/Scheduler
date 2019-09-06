@@ -23,6 +23,7 @@
         android:layout_marginRight="32dp"
         android:layout_marginBottom="16dp"
         android:clickable="true"
+        android:onClick="showAddAssessment"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:srcCompat="@android:drawable/ic_input_add" />

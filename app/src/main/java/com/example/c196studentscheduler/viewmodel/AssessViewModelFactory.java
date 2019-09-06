@@ -16,6 +16,9 @@ public class AssessViewModelFactory implements ViewModelProvider.Factory {
         this.courseID = courseID;
     }
 
+    public AssessViewModelFactory(Application application) {
+        this.application = application;
+    }
 
     @NonNull
     @Override

@@ -30,7 +30,7 @@ public class CourseList extends AppCompatActivity {
 
 
     @BindView(R.id.list_course_recycler)
-    private RecyclerView recyclerView;
+    RecyclerView recyclerView;
     private List<Course> courseData = new ArrayList<>();
     private CourseListAdapter mAdapter;
     private CourseViewModel courseViewModel;

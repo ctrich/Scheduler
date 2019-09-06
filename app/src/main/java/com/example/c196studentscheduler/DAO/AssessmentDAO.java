@@ -31,5 +31,5 @@ public interface AssessmentDAO {
     LiveData<List<Assessment>> getAssessmentsByCourseId(int courseId);
 
     @Query("SELECT * FROM Assessments WHERE AssessmentId = :assessmentId")
-    LiveData<Assessment> getAssessmentById(int assessmentId);
+    Assessment getAssessmentById(int assessmentId);
 }
