@@ -8,6 +8,7 @@ import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 
 import com.example.c196studentscheduler.Database.SchedulerRepository;
+import com.example.c196studentscheduler.R;
 import com.example.c196studentscheduler.entity.Assessment;
 
 import java.util.List;
@@ -45,5 +46,23 @@ public class AssessViewModel extends AndroidViewModel {
             }
         });
 
+    }
+
+    public void updateAssessment(Assessment assessment) {
+        executor.execute(new Runnable() {
+            @Override
+            public void run() {
+                schedulerRepository.updateAssessment(assessment);
+            }
+        });
+    }
+
+    public void deleteAssessment(Assessment assessment) {
+        executor.execute(new Runnable() {
+            @Override
+            public void run() {
+                schedulerRepository.deleteAssessment(assessment);
+            }
+        });
     }
 }

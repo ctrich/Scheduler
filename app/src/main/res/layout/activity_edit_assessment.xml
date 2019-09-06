@@ -59,16 +59,16 @@
         app:layout_constraintTop_toTopOf="@+id/textView48">
 
         <RadioButton
-            android:id="@+id/radioButton2"
+            android:id="@+id/radio_objective"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="RadioButton" />
+            android:text="Objective" />
 
         <RadioButton
-            android:id="@+id/radioButton"
+            android:id="@+id/radio_performance"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="RadioButton" />
+            android:text="Performance" />
     </RadioGroup>
 
     <TextView
