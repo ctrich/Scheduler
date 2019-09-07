@@ -66,10 +66,10 @@ public class EditAssessment extends AppCompatActivity {
                 courseId = assessment.getCourseId();
                 String goalDate = convertDateToString(assessment.getDueDate());
 
-                if (assessment.getType() == "Objective") {
-                    objective.isChecked();
+                if (assessment.getType().equals("Objective")) {
+                    objective.setChecked(true);
                 } else {
-                    performance.isChecked();
+                    performance.setChecked(true);
                 }
                 title.setText(assessment.getName());
                 goal.setText(goalDate);
