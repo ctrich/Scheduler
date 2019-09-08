@@ -91,6 +91,7 @@ public class EditTerm extends AppCompatActivity {
     @Override
     public void onBackPressed () {
         Intent intent = new Intent(this, TermDetails.class);
+        intent.putExtra(Constants.TERM_ID_KEY, termId);
         startActivity(intent);
     }
 
@@ -112,10 +113,11 @@ public class EditTerm extends AppCompatActivity {
     }
 
     public void deleteTerm(View view) {
+        
         termViewModel.deleteTerm(deleteTerm);
-
         Intent intent = new Intent(this, TermList.class);
         startActivity(intent);
+
     }
 
     public void cancelEdit(View view) {

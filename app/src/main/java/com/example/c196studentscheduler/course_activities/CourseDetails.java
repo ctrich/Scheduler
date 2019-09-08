@@ -3,6 +3,7 @@ package com.example.c196studentscheduler.course_activities;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProviders;
+import androidx.recyclerview.widget.DividerItemDecoration;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -18,6 +19,7 @@ import com.example.c196studentscheduler.assessment_activities.AssessmentList;
 import com.example.c196studentscheduler.entity.Course;
 import com.example.c196studentscheduler.entity.Mentor;
 import com.example.c196studentscheduler.mentor_activities.AddMentor;
+import com.example.c196studentscheduler.note_activities.NoteList;
 import com.example.c196studentscheduler.util.Constants;
 import com.example.c196studentscheduler.viewmodel.CourseViewModel;
 import com.example.c196studentscheduler.viewmodel.CourseViewModelFactory;
@@ -65,7 +67,7 @@ public class CourseDetails extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_course_details);
-//        setTitle(Constants.);
+        setTitle(Constants.COURSE_DETAILS_TITLE);
 
         ButterKnife.bind(this);
         initRecyclerView();
@@ -117,13 +119,16 @@ public class CourseDetails extends AppCompatActivity {
         LinearLayoutManager layoutManager = new LinearLayoutManager(this);
         mRecyclerView.setLayoutManager(layoutManager);
 
+        DividerItemDecoration divider = new DividerItemDecoration(mRecyclerView.getContext(), layoutManager.getOrientation());
+        mRecyclerView.addItemDecoration(divider);
+
     }
 
-//    public void showCourses(View view) {
-//        Intent intent = new Intent(this, CourseList.class);
-//        intent.putExtra(Constants.TERM_ID_KEY, termId);
-//        startActivity(intent);
-//    }
+    public void viewNotes(View view) {
+        Intent intent = new Intent(this, NoteList.class);
+        intent.putExtra(Constants.COURSE_ID_KEY, courseId);
+        startActivity(intent);
+    }
 
     @Override
     public void onBackPressed () {

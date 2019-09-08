@@ -4,27 +4,28 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".assessment_activities.AssessmentList">
+    tools:context=".note_activities.NoteList">
 
     <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/assessment_list_recycler"
+        android:id="@+id/notes_list_recycler"
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        app:layout_constraintBottom_toTopOf="@+id/assessment_list_add_fab"
+        android:layout_marginBottom="16dp"
+        app:layout_constraintBottom_toTopOf="@+id/note_list_add_fab"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
     <com.google.android.material.floatingactionbutton.FloatingActionButton
-        android:id="@+id/assessment_list_add_fab"
+        android:id="@+id/note_list_add_fab"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
         app:backgroundTint="@color/colorPrimary"
+        android:layout_height="wrap_content"
         android:layout_marginEnd="32dp"
         android:layout_marginRight="32dp"
-        android:layout_marginBottom="16dp"
+        android:layout_marginBottom="32dp"
         android:clickable="true"
-        android:onClick="showAddAssessment"
+        android:onClick="showAddNote"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:srcCompat="@android:drawable/ic_input_add" />

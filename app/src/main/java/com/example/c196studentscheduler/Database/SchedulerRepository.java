@@ -68,6 +68,7 @@ public class SchedulerRepository {
         courseDAO = mDb.courseDAO();
         mentorDAO = mDb.mentorDAO();
         assessmentDAO = mDb.assessmentDAO();
+        noteDAO = mDb.noteDAO();
         mCourses = getAllCourses();
         mTerms = getAllTerms();
         getTerms();
@@ -121,7 +122,7 @@ public class SchedulerRepository {
         }
 
         public void createNote(Note note) {
-            noteDAO.isertNote(note);
+            mDb.noteDAO().insertNote(note);
         }
         public void createAssessment(Assessment assessment) {
             assessmentDAO.insertAssessment(assessment);
@@ -188,7 +189,7 @@ public class SchedulerRepository {
         return mentorDAO.getMentorById(mentorId);
     }
 
-    public LiveData<Note> getNoteByid(int noteId) {
+    public Note getNoteByid(int noteId) {
         return noteDAO.getNoteById(noteId);
     }
 

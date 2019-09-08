@@ -58,6 +58,7 @@
             <com.google.android.material.floatingactionbutton.FloatingActionButton
                 android:id="@+id/assessment_list_view_fab"
                 android:layout_width="wrap_content"
+                app:backgroundTint="@color/colorPrimary"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="16dp"
                 android:layout_marginEnd="24dp"

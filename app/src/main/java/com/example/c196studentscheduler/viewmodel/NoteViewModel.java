@@ -8,61 +8,60 @@ import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 
 import com.example.c196studentscheduler.Database.SchedulerRepository;
-
-import com.example.c196studentscheduler.entity.Assessment;
+import com.example.c196studentscheduler.entity.Note;
 
 import java.util.List;
 import java.util.concurrent.Executor;
 import java.util.concurrent.Executors;
 
-public class AssessViewModel extends AndroidViewModel {
+public class NoteViewModel extends AndroidViewModel {
 
-    public MutableLiveData<Assessment> mLiveAssessment = new MutableLiveData<>();
+    public MutableLiveData<Note> mLiveNote = new MutableLiveData<>();
     private SchedulerRepository schedulerRepository;
     private Executor executor = Executors.newSingleThreadExecutor();
-    public LiveData<List<Assessment>> mAssessmentByCourseId;
+    public LiveData<List<Note>> noteByCourseId;
 
-    public AssessViewModel(@NonNull Application application, int courseId) {
+    public NoteViewModel(@NonNull Application application, int courseId) {
         super(application);
         schedulerRepository = SchedulerRepository.getInstance(application.getApplicationContext());
-        mAssessmentByCourseId = schedulerRepository.getAssessmentByCourseId(courseId);
+        noteByCourseId = schedulerRepository.getNotesByCourseId(courseId);
     }
 
-    public void addAssessment(Assessment assessment) {
+    public void addNote(Note note) {
         executor.execute(new Runnable() {
             @Override
             public void run() {
-                schedulerRepository.createAssessment(assessment);
+                schedulerRepository.createNote(note);
             }
         });
     }
 
-    public void loadData(int assessmentId) {
+    public void updateNote(Note note) {
         executor.execute(new Runnable() {
             @Override
             public void run() {
-                Assessment assessment = schedulerRepository.getAssessmentByid(assessmentId);
-                mLiveAssessment.postValue(assessment);
-            }
-        });
-
-    }
-
-    public void updateAssessment(Assessment assessment) {
-        executor.execute(new Runnable() {
-            @Override
-            public void run() {
-                schedulerRepository.updateAssessment(assessment);
+                schedulerRepository.updateNote(note);
             }
         });
     }
 
-    public void deleteAssessment(Assessment assessment) {
+    public void deleteNote(Note note) {
         executor.execute(new Runnable() {
             @Override
             public void run() {
-                schedulerRepository.deleteAssessment(assessment);
+                schedulerRepository.deleteNote(note);
             }
         });
+    }
+
+    public void loadData(int noteId) {
+        executor.execute(new Runnable() {
+            @Override
+            public void run() {
+                Note note = schedulerRepository.getNoteByid(noteId);
+                mLiveNote.postValue(note);
+            }
+        });
+
     }
 }

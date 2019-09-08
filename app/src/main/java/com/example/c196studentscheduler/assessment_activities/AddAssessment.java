@@ -49,6 +49,7 @@ public class AddAssessment extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_add_assessment);
+        setTitle(Constants.ASSESSMENT_ADD_TITLE);
 
         ButterKnife.bind(this);
         initViewModel();
@@ -75,6 +76,13 @@ public class AddAssessment extends AppCompatActivity {
         currentAssessment = new Assessment(courseId, assessTitle, radioButton.getText().toString(), date);
         assessViewModel.addAssessment(currentAssessment);
 
+        Intent intent = new Intent(this, AssessmentList.class);
+        intent.putExtra(Constants.COURSE_ID_KEY, courseId);
+        startActivity(intent);
+    }
+
+    @Override
+    public void onBackPressed () {
         Intent intent = new Intent(this, AssessmentList.class);
         intent.putExtra(Constants.COURSE_ID_KEY, courseId);
         startActivity(intent);

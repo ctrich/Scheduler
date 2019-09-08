@@ -50,6 +50,7 @@ public class EditAssessment extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_edit_assessment);
+        setTitle(Constants.ASSESSMENT_EDIT_TITLE);
         ButterKnife.bind(this);
         initViewModel();
     }
@@ -90,7 +91,7 @@ public class EditAssessment extends AppCompatActivity {
     }
 
 
-    public void updateCourse(View view) {
+    public void updateAssessment(View view) {
         String date = goal.getText().toString();
 
         int selectedId = radioGroup.getCheckedRadioButtonId();
@@ -108,7 +109,7 @@ public class EditAssessment extends AppCompatActivity {
         startActivity(intent);
     }
 
-    public void deleteCourse(View view) {
+    public void deleteAssessment(View view) {
         assessViewModel.deleteAssessment(assessmentToDelete);
 
         Intent intent = new Intent(this, AssessmentList.class);
@@ -116,7 +117,7 @@ public class EditAssessment extends AppCompatActivity {
         startActivity(intent);
     }
 
-    public void cancelCourseEdit(View view) {
+    public void cancelAssessEdit(View view) {
         Intent intent = new Intent(this, AssessmentDetails.class);
         intent.putExtra(Constants.ASSESSMENT_ID_KEY, assessmentId);
         startActivity(intent);

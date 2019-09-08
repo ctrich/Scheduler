@@ -54,6 +54,7 @@ public class EditCourse extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_edit_course);
+        setTitle(Constants.COURSE_EDIT_TITE);
 
         ButterKnife.bind(this);
         initViewModel();

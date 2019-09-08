@@ -80,6 +80,7 @@ public class AddTerm extends AppCompatActivity {
         startActivity(intent);
     }
 
+
     public Date convertStringToDate(String sDate) throws ParseException {
         Log.d(TAG, "convertStringToDate: " + sDate);
         SimpleDateFormat simpleDateFormat = new SimpleDateFormat("MM/dd/yyyy");

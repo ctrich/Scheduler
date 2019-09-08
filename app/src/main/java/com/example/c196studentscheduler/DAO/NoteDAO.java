@@ -16,7 +16,7 @@ import java.util.List;
 public interface NoteDAO {
 
     @Insert
-    void isertNote(Note note);
+    void insertNote(Note note);
 
     @Update
     void updateNote(Note note);
@@ -27,9 +27,9 @@ public interface NoteDAO {
     @Query("SELECT * FROM NOTES")
     LiveData<List<Note>> getAllNotes();
 
-    @Query("SELECT * FROM NOTES WHERE CourseId = :courseId")
+    @Query("SELECT * FROM Notes WHERE CourseId = :courseId")
     LiveData<List<Note>> getNoteByCourseId(int courseId);
 
     @Query("SELECT * FROM Notes WHERE NoteId = :noteId")
-    LiveData<Note> getNoteById(int noteId);
+    Note getNoteById(int noteId);
 }

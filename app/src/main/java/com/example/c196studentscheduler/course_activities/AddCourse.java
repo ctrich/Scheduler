@@ -91,6 +91,14 @@ public class AddCourse extends AppCompatActivity {
         startActivity(intent);
     }
 
+    @Override
+    public void onBackPressed () {
+        Intent intent = new Intent(this, CourseList.class);
+        intent.putExtra(Constants.TERM_ID_KEY, termId);
+        startActivity(intent);
+    }
+
+
     public void cancelAdd(View view) {
         Intent intent = new Intent(this, CourseList.class);
         intent.putExtra(Constants.TERM_ID_KEY, termId);

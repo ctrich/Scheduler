@@ -35,7 +35,7 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="8dp"
         android:layout_marginLeft="8dp"
-        android:text="TextView"
+        android:hint="title"
         app:layout_constraintBaseline_toBaselineOf="@+id/textView34"
         app:layout_constraintStart_toEndOf="@+id/textView34" />
 
@@ -96,7 +96,7 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="8dp"
         android:layout_marginLeft="8dp"
-        android:text="TextView"
+        android:hint="MM/DD/YYYY"
         app:layout_constraintBaseline_toBaselineOf="@+id/textView37"
         app:layout_constraintStart_toEndOf="@+id/textView37" />
 
@@ -120,6 +120,7 @@
         android:layout_marginLeft="8dp"
         android:layout_marginEnd="32dp"
         android:layout_marginRight="32dp"
+        android:onClick="cancelAdd"
         android:text="Cancel"
         app:layout_constraintBaseline_toBaselineOf="@+id/assess_add_save"
         app:layout_constraintEnd_toEndOf="parent"

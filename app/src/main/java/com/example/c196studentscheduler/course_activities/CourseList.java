@@ -3,6 +3,7 @@ package com.example.c196studentscheduler.course_activities;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProviders;
+import androidx.recyclerview.widget.DividerItemDecoration;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -12,6 +13,7 @@ import android.util.Log;
 import android.view.View;
 
 import com.example.c196studentscheduler.R;
+import com.example.c196studentscheduler.TermDetails;
 import com.example.c196studentscheduler.adapter.CourseListAdapter;
 import com.example.c196studentscheduler.entity.Course;
 import com.example.c196studentscheduler.util.Constants;
@@ -70,7 +72,6 @@ public class CourseList extends AppCompatActivity {
             }
         };
         CourseViewModelFactory factory = new CourseViewModelFactory(this.getApplication(), termId);
-        Log.d(TAG, "initViewModel: " + termId);
         courseViewModel = ViewModelProviders.of(this, factory).get(CourseViewModel.class);
         courseViewModel.mCourseByTerm.observe(this, courseObserver);
     }
@@ -81,9 +82,20 @@ public class CourseList extends AppCompatActivity {
         startActivity(intent);
     }
 
+    @Override
+    public void onBackPressed () {
+        Intent intent = new Intent(this, TermDetails.class);
+        intent.putExtra(Constants.TERM_ID_KEY, termId);
+        startActivity(intent);
+    }
+
+
     private void initRecyclerView() {
         recyclerView.setHasFixedSize(true);
         LinearLayoutManager layoutManager = new LinearLayoutManager(this);
         recyclerView.setLayoutManager(layoutManager);
+
+        DividerItemDecoration divider = new DividerItemDecoration(recyclerView.getContext(), layoutManager.getOrientation());
+        recyclerView.addItemDecoration(divider);
     }
 }

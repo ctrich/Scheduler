@@ -131,6 +131,7 @@
         android:layout_height="48dp"
         android:layout_marginEnd="40dp"
         android:layout_marginRight="40dp"
+        android:onClick="viewNotes"
         android:text="View Notes"
         app:layout_constraintBaseline_toBaselineOf="@+id/course_d_assess_btn"
         app:layout_constraintEnd_toEndOf="parent" />

@@ -45,6 +45,7 @@ public class AssessmentDetails extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_assessment_details);
+        setTitle(Constants.ASSESSMENT_DETAILS_TITLE);
 
         ButterKnife.bind(this);
         initViewModel();
