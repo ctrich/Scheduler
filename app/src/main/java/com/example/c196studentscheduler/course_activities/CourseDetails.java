@@ -9,6 +9,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
@@ -68,10 +69,21 @@ public class CourseDetails extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_course_details);
         setTitle(Constants.COURSE_DETAILS_TITLE);
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
         ButterKnife.bind(this);
         initRecyclerView();
         initViewModel();
+    }
+
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item)
+    {
+        Intent intent = new Intent(this, CourseList.class);
+        intent.putExtra(Constants.TERM_ID_KEY, termId);
+        startActivity(intent);
+        return true;
     }
 
     private void initViewModel() {

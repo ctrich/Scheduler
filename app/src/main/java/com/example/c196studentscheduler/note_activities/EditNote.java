@@ -6,6 +6,7 @@ import androidx.lifecycle.ViewModelProviders;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.EditText;
 
@@ -39,9 +40,19 @@ public class EditNote extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_edit_note);
         setTitle(Constants.NOTES_EDIT_TITLE);
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
         ButterKnife.bind(this);
         initViewModel();
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item)
+    {
+        Intent intent = new Intent(this, NoteList.class);
+        intent.putExtra(Constants.COURSE_ID_KEY, courseId);
+        startActivity(intent);
+        return true;
     }
 
     private void initViewModel() {

@@ -5,12 +5,14 @@ import androidx.lifecycle.ViewModelProviders;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.example.c196studentscheduler.R;
 import com.example.c196studentscheduler.entity.Assessment;
@@ -49,12 +51,20 @@ public class AddAssessment extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_add_assessment);
-        setTitle(Constants.ASSESSMENT_ADD_TITLE);
-
+        getSupportActionBar().setTitle(Constants.ASSESSMENT_ADD_TITLE);
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         ButterKnife.bind(this);
         initViewModel();
     }
 
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item)
+    {
+        Intent intent = new Intent(this, AssessmentList.class);
+        intent.putExtra(Constants.COURSE_ID_KEY, courseId);
+        startActivity(intent);
+        return true;
+    }
 
     private void initViewModel() {
         factory = new AssessViewModelFactory(this.getApplication());
@@ -65,20 +75,23 @@ public class AddAssessment extends AppCompatActivity {
         courseId = extras.getInt(Constants.COURSE_ID_KEY);
     }
 
-    public void saveAssess(View view) throws ParseException {
+    public void saveAssess(View view) {
         String aGoal = goal.getText().toString();
         String assessTitle = title.getText().toString();
         int selectedId = radioGroup.getCheckedRadioButtonId();
         radioButton = findViewById(selectedId);
+        try {
+            Date date = convertStringToDate(aGoal);
 
-        Date date = convertStringToDate(aGoal);
+            currentAssessment = new Assessment(courseId, assessTitle, radioButton.getText().toString(), date);
+            assessViewModel.addAssessment(currentAssessment);
 
-        currentAssessment = new Assessment(courseId, assessTitle, radioButton.getText().toString(), date);
-        assessViewModel.addAssessment(currentAssessment);
-
-        Intent intent = new Intent(this, AssessmentList.class);
-        intent.putExtra(Constants.COURSE_ID_KEY, courseId);
-        startActivity(intent);
+            Intent intent = new Intent(this, AssessmentList.class);
+            intent.putExtra(Constants.COURSE_ID_KEY, courseId);
+            startActivity(intent);
+        }catch (ParseException e) {
+            Toast.makeText(this, "Invalid Date", Toast.LENGTH_LONG).show();
+        }
     }
 
     @Override
@@ -97,6 +110,7 @@ public class AddAssessment extends AppCompatActivity {
 
     public Date convertStringToDate(String sDate) throws ParseException {
         SimpleDateFormat simpleDateFormat = new SimpleDateFormat("MM/dd/yyyy");
+        simpleDateFormat.setLenient(false);
         Date date = simpleDateFormat.parse(sDate);
         return date;
     }

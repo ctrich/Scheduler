@@ -8,6 +8,7 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
+import android.widget.Toast;
 
 import com.example.c196studentscheduler.R;
 
@@ -44,6 +45,7 @@ public class AddTerm extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_add_term);
         setTitle(Constants.TERM_ADD_TITLE);
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
         ButterKnife.bind(this);
         initViewModel();
@@ -60,19 +62,20 @@ public class AddTerm extends AppCompatActivity {
         startActivity(intent);
     }
 
-    public void saveTerm(View view) throws ParseException {
-        Log.d(TAG, "saveTerm: ");
+    public void saveTerm(View view){
+
         String sd = startDate.getText().toString();
         String ed = endDate.getText().toString();
-
-        Date startD = convertStringToDate(sd);
-        Date endD = convertStringToDate(ed);
-        currentTerm = new Term(termTitle.getText().toString(), startD, endD);
-
-        termViewModel.addTerms(currentTerm);
-
-        Intent intent = new Intent(this, TermList.class);
-        startActivity(intent);
+        try {
+            Date startD = convertStringToDate(sd);
+            Date endD = convertStringToDate(ed);
+            currentTerm = new Term(termTitle.getText().toString(), startD, endD);
+            termViewModel.addTerms(currentTerm);
+            Intent intent = new Intent(this, TermList.class);
+            startActivity(intent);
+        }catch (ParseException e) {
+            Toast.makeText(this, "Invalid Date", Toast.LENGTH_LONG  ).show();
+        }
     }
 
     public void cancelAdd(View view) {
@@ -82,8 +85,9 @@ public class AddTerm extends AppCompatActivity {
 
 
     public Date convertStringToDate(String sDate) throws ParseException {
-        Log.d(TAG, "convertStringToDate: " + sDate);
+
         SimpleDateFormat simpleDateFormat = new SimpleDateFormat("MM/dd/yyyy");
+        simpleDateFormat.setLenient(false);
         Date date = simpleDateFormat.parse(sDate);
         return date;
     }

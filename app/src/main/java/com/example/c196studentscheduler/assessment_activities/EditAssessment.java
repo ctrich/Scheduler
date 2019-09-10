@@ -6,10 +6,12 @@ import androidx.lifecycle.ViewModelProviders;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
+import android.widget.Toast;
 
 import com.example.c196studentscheduler.R;
 import com.example.c196studentscheduler.entity.Assessment;
@@ -51,8 +53,18 @@ public class EditAssessment extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_edit_assessment);
         setTitle(Constants.ASSESSMENT_EDIT_TITLE);
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         ButterKnife.bind(this);
         initViewModel();
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item)
+    {
+        Intent intent = new Intent(this, AssessmentDetails.class);
+        intent.putExtra(Constants.ASSESSMENT_ID_KEY, assessmentId);
+        startActivity(intent);
+        return true;
     }
 
     private void initViewModel() {
@@ -101,12 +113,14 @@ public class EditAssessment extends AppCompatActivity {
             Date goalD = convertStringToDate(date);
             currentAssessment = new Assessment(assessmentId, courseId, title.getText().toString(), radioButton.getText().toString(), goalD);
             assessViewModel.updateAssessment(currentAssessment);
+
+            Intent intent = new Intent(this, AssessmentDetails.class);
+            intent.putExtra(Constants.ASSESSMENT_ID_KEY, assessmentId);
+            startActivity(intent);
         } catch (ParseException e) {
             e.printStackTrace();
+            Toast.makeText(this, "Invalid Date", Toast.LENGTH_LONG).show();
         }
-        Intent intent = new Intent(this, AssessmentDetails.class);
-        intent.putExtra(Constants.ASSESSMENT_ID_KEY, assessmentId);
-        startActivity(intent);
     }
 
     public void deleteAssessment(View view) {
@@ -133,6 +147,7 @@ public class EditAssessment extends AppCompatActivity {
 
     public Date convertStringToDate(String sDate) throws ParseException {
         SimpleDateFormat simpleDateFormat = new SimpleDateFormat("MM/dd/yyyy");
+        simpleDateFormat.setLenient(false);
         Date date = simpleDateFormat.parse(sDate);
         return date;
     }

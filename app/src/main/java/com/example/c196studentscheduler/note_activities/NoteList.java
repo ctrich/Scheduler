@@ -9,6 +9,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.view.MenuItem;
 import android.view.View;
 
 import com.example.c196studentscheduler.R;
@@ -42,10 +43,20 @@ public class NoteList extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_note_list);
         setTitle(Constants.NOTES_LIST_TITLE);
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
         ButterKnife.bind(this);
         initRecyclerView();
         initViewModel();
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item)
+    {
+        Intent intent = new Intent(this, CourseDetails.class);
+        intent.putExtra(Constants.COURSE_ID_KEY, courseId);
+        startActivity(intent);
+        return true;
     }
 
     private void initViewModel() {

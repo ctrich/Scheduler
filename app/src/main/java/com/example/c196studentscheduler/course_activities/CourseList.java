@@ -10,6 +10,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.MenuItem;
 import android.view.View;
 
 import com.example.c196studentscheduler.R;
@@ -47,6 +48,7 @@ public class CourseList extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_course_list);
         setTitle(Constants.COURSE_LIST_TITLE);
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
         Bundle extras = getIntent().getExtras();
         termId = extras.getInt(Constants.TERM_ID_KEY);
@@ -55,6 +57,15 @@ public class CourseList extends AppCompatActivity {
         ButterKnife.bind(this);
         initRecyclerView();
         initViewModel();
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item)
+    {
+        Intent intent = new Intent(this, TermDetails.class);
+        intent.putExtra(Constants.TERM_ID_KEY, termId);
+        startActivity(intent);
+        return true;
     }
 
     private void initViewModel() {

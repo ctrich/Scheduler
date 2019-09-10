@@ -63,6 +63,7 @@ public class TermViewModel extends AndroidViewModel {
             public void run() {
                 Term term = schedulerRepository.getTermByid(termId);
                 mLiveTerm.postValue(term);
+
             }
         });
 

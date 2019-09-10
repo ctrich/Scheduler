@@ -6,9 +6,11 @@ import androidx.lifecycle.ViewModelProviders;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.Toast;
 
 import com.example.c196studentscheduler.R;
 import com.example.c196studentscheduler.entity.Course;
@@ -55,9 +57,19 @@ public class EditCourse extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_edit_course);
         setTitle(Constants.COURSE_EDIT_TITE);
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
         ButterKnife.bind(this);
         initViewModel();
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item)
+    {
+        Intent intent = new Intent(this, CourseDetails.class);
+        intent.putExtra(Constants.COURSE_ID_KEY, courseId);
+        startActivity(intent);
+        return true;
     }
 
     private void initViewModel() {
@@ -101,12 +113,14 @@ public class EditCourse extends AppCompatActivity {
             Date endD = convertStringToDate(ed);
             currentCourse = new Course(courseId, title.getText().toString(), termId, status.getText().toString(), startD, endD);
             courseViewModel.updateCourse(currentCourse);
+            Intent intent = new Intent(this, CourseDetails.class);
+            intent.putExtra(Constants.COURSE_ID_KEY, courseId);
+            startActivity(intent);
         } catch (ParseException e) {
             e.printStackTrace();
+            Toast.makeText(this, "Invalid Date", Toast.LENGTH_LONG).show();
         }
-        Intent intent = new Intent(this, CourseDetails.class);
-        intent.putExtra(Constants.COURSE_ID_KEY, courseId);
-        startActivity(intent);
+
     }
 
     public void deleteCourse(View view) {
@@ -133,6 +147,7 @@ public class EditCourse extends AppCompatActivity {
 
     public Date convertStringToDate(String sDate) throws ParseException {
         SimpleDateFormat simpleDateFormat = new SimpleDateFormat("MM/dd/yyyy");
+        simpleDateFormat.setLenient(false);
         Date date = simpleDateFormat.parse(sDate);
         return date;
     }

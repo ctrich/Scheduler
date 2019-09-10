@@ -35,4 +35,8 @@ public interface CourseDAO {
 
     @Query("SELECT Name FROM Terms WHERE TermId = :termID")
     String getTermNameByTermId(int termID);
+
+    @Query("SELECT COUNT(*) FROM Courses where TermId = :termId")
+    int getCoursesForTermDelete(Integer termId);
+
 }

@@ -3,31 +3,40 @@ package com.example.c196studentscheduler.Term_Activities;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProviders;
+import androidx.room.RoomDatabase;
 
 import android.content.Intent;
 import android.os.Bundle;
 
+import android.util.Log;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.Toast;
 
 
 import com.example.c196studentscheduler.R;
 import com.example.c196studentscheduler.TermDetails;
 import com.example.c196studentscheduler.entity.Term;
 import com.example.c196studentscheduler.util.Constants;
+import com.example.c196studentscheduler.viewmodel.CourseViewModel;
+import com.example.c196studentscheduler.viewmodel.CourseViewModelFactory;
 import com.example.c196studentscheduler.viewmodel.TermViewModel;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
+import java.sql.SQLException;
 import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.concurrent.ExecutionException;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
 public class EditTerm extends AppCompatActivity {
+    private static final String TAG = "EditTerm";
 
     @BindView(R.id.et_edit_title)
     EditText editTitle;
@@ -45,9 +54,11 @@ public class EditTerm extends AppCompatActivity {
 
     private Term currentTerm;
     private TermViewModel termViewModel;
-    private boolean mNewTerm;
     private int termId;
     private Term deleteTerm;
+    private CourseViewModelFactory factory;
+    private CourseViewModel courseViewModel;
+    private int numberOfCourses;
 
 
     @Override
@@ -55,14 +66,27 @@ public class EditTerm extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_edit_term);
         setTitle(Constants.TERM_EDIT_TITLE);
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
         ButterKnife.bind(this);
         initViewModel();
     }
 
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item)
+    {
+        Intent intent = new Intent(this, TermDetails.class);
+        intent.putExtra(Constants.TERM_ID_KEY, termId);
+        startActivity(intent);
+        return true;
+    }
+
 
 
     private void initViewModel() {
+
+
+
         termViewModel = ViewModelProviders.of(this).get(TermViewModel.class);
 
         termViewModel.mLiveTerm.observe(this, new Observer<Term>() {
@@ -78,14 +102,11 @@ public class EditTerm extends AppCompatActivity {
             }
         });
         Bundle extras = getIntent().getExtras();
-        if (extras == null) {
+        termId = extras.getInt(Constants.TERM_ID_KEY);
+        termViewModel.loadData(termId);
 
-            mNewTerm = true;
-        } else {
-
-            termId = extras.getInt(Constants.TERM_ID_KEY);
-            termViewModel.loadData(termId);
-        }
+        factory = new CourseViewModelFactory(this.getApplication(), termId);
+        courseViewModel = ViewModelProviders.of(this, factory).get(CourseViewModel.class);
     }
 
     @Override
@@ -104,19 +125,25 @@ public class EditTerm extends AppCompatActivity {
             Date endD = convertStringToDate(ed);
             currentTerm = new Term(termId, editTitle.getText().toString(), startD, endD);
             termViewModel.updateTerm(currentTerm);
+            Intent intent = new Intent(this, TermDetails.class);
+            intent.putExtra(Constants.TERM_ID_KEY, termId);
+            startActivity(intent);
         } catch (ParseException e) {
-            e.printStackTrace();
+            Toast.makeText(this, "Invalid Date", Toast.LENGTH_LONG).show();
         }
-        Intent intent = new Intent(this, TermDetails.class);
-        intent.putExtra(Constants.TERM_ID_KEY, termId);
-        startActivity(intent);
     }
 
     public void deleteTerm(View view) {
-        
-        termViewModel.deleteTerm(deleteTerm);
-        Intent intent = new Intent(this, TermList.class);
-        startActivity(intent);
+
+        numberOfCourses = courseViewModel.getCourseCount(termId);
+        Log.d(TAG, "deleteTerm: " + numberOfCourses + " " + termId);
+        if (numberOfCourses == 0){
+            termViewModel.deleteTerm(deleteTerm);
+            Intent intent = new Intent(this, TermList.class);
+            startActivity(intent);
+        }else {
+                Toast.makeText(this, "Terms with courses assigned cannot be deleted", Toast.LENGTH_LONG).show();
+        }
 
     }
 
@@ -136,6 +163,7 @@ public class EditTerm extends AppCompatActivity {
 
     public Date convertStringToDate(String sDate) throws ParseException {
         SimpleDateFormat simpleDateFormat = new SimpleDateFormat("MM/dd/yyyy");
+        simpleDateFormat.setLenient(false);
         Date date = simpleDateFormat.parse(sDate);
         return date;
     }

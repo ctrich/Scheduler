@@ -106,7 +106,6 @@
         android:layout_marginRight="16dp"
         android:ems="10"
         android:hint="(555)555-5555"
-        android:inputType="number"
         app:layout_constraintBaseline_toBaselineOf="@+id/textView29"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toEndOf="@+id/textView29" />

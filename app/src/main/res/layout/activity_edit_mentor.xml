@@ -54,7 +54,6 @@
         android:id="@+id/mentor_edit_phone"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:inputType="number"
         android:layout_marginEnd="16dp"
         android:layout_marginRight="16dp"
         android:hint="(555)555-5555"

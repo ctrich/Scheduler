@@ -1,6 +1,7 @@
 package com.example.c196studentscheduler.Database;
 
 import android.content.Context;
+import android.os.AsyncTask;
 import android.util.Log;
 
 import androidx.lifecycle.LiveData;
@@ -17,6 +18,7 @@ import com.example.c196studentscheduler.entity.Note;
 import com.example.c196studentscheduler.entity.Term;
 
 import java.util.List;
+import java.util.concurrent.ExecutionException;
 import java.util.concurrent.Executor;
 import java.util.concurrent.Executors;
 
@@ -181,6 +183,17 @@ public class SchedulerRepository {
         return courseDAO.getTermNameByTermId(termId);
     }
 
+    public int numCoursesInTerm(int termId) {
+        try {
+            return new CourseCount().execute(termId).get();
+        } catch (ExecutionException e) {
+            e.printStackTrace();
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+        return -1;
+    }
+
     public Course getCourseByid(int courseId) {
         return courseDAO.getCourseById(courseId);
     }
@@ -213,4 +226,12 @@ public class SchedulerRepository {
         return assessmentDAO.getAssessmentsByCourseId(courseId);
     }
 
+    private class CourseCount extends AsyncTask<Integer, Void, Integer> {
+
+        @Override
+        protected Integer doInBackground(Integer... integers) {
+            int termId = integers[0].intValue();
+            return courseDAO.getCoursesForTermDelete(termId);
+        }
+    }
 }

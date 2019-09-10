@@ -5,6 +5,7 @@ import androidx.lifecycle.ViewModelProviders;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -40,9 +41,18 @@ public class AddMentor extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_add_mentor);
         setTitle(Constants.MENTOR_ADD_TITLE);
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
         ButterKnife.bind(this);
         initViewModel();
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        Intent intent = new Intent(this, CourseDetails.class);
+        intent.putExtra(Constants.COURSE_ID_KEY, courseId);
+        startActivity(intent);
+        return true;
     }
 
     private void initViewModel() {

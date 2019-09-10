@@ -14,6 +14,7 @@ import java.util.List;
 import java.util.concurrent.Executor;
 import java.util.concurrent.Executors;
 
+
 public class CourseViewModel extends AndroidViewModel {
 
     public MutableLiveData<Course> mLiveCourse = new MutableLiveData<>();
@@ -22,6 +23,8 @@ public class CourseViewModel extends AndroidViewModel {
     private SchedulerRepository schedulerRepository;
     private Executor executor = Executors.newSingleThreadExecutor();
 
+
+
     public CourseViewModel(@NonNull Application application, int termId) {
         super(application);
         schedulerRepository = SchedulerRepository.getInstance(application.getApplicationContext());
@@ -29,6 +32,10 @@ public class CourseViewModel extends AndroidViewModel {
         mCourses = schedulerRepository.mCourses;
     }
 
+
+    public int getCourseCount(int termId) {
+        return schedulerRepository.numCoursesInTerm(termId);
+    }
 
 
     public void addCourse(Course course) {
@@ -63,4 +70,5 @@ public class CourseViewModel extends AndroidViewModel {
         });
 
     }
+
 }

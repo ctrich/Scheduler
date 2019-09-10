@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     package="com.example.c196studentscheduler">
 
     <application
@@ -8,24 +9,42 @@
         android:label="@string/app_name"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
-        android:theme="@style/AppTheme">
-        <activity android:name=".note_activities.EditNote"></activity>
-        <activity android:name=".note_activities.AddNote" />
-        <activity android:name=".note_activities.NoteList" />
-        <activity android:name=".assessment_activities.EditAssessment" />
-        <activity android:name=".assessment_activities.AssessmentDetails" />
-        <activity android:name=".assessment_activities.AddAssessment" />
-        <activity android:name=".assessment_activities.AssessmentList" />
-        <activity android:name=".mentor_activities.EditMentor" />
-        <activity android:name=".mentor_activities.AddMentor" />
-        <activity android:name=".course_activities.EditCourse" />
-        <activity android:name=".course_activities.CourseDetails" />
-        <activity android:name=".TermDetails" />
-        <activity android:name=".course_activities.AddCourse" />
-        <activity android:name=".course_activities.CourseList" />
-        <activity android:name=".Term_Activities.EditTerm" />
-        <activity android:name=".Term_Activities.AddTerm" />
-        <activity android:name=".Term_Activities.TermList" />
+        android:theme="@style/AppTheme"
+        tools:ignore="AllowBackup,GoogleAppIndexingWarning">
+        <activity android:name=".note_activities.EditNote"
+                  android:parentActivityName = ".note_activities.NoteList"></activity>
+        <activity android:name=".note_activities.AddNote"
+                  android:parentActivityName = ".note_activities.NoteList" />
+        <activity android:name=".note_activities.NoteList"
+                  android:parentActivityName = ".course_activities.CourseDetails"/>
+        <activity android:name=".assessment_activities.EditAssessment"
+                  android:parentActivityName = ".assessment_activities.AssessmentDetails"/>
+        <activity android:name=".assessment_activities.AssessmentDetails"
+                  android:parentActivityName = ".assessment_activities.AssessmentList"/>
+        <activity android:name=".assessment_activities.AddAssessment"
+                  android:parentActivityName = ".assessment_activities.AssessmentList"/>
+        <activity android:name=".assessment_activities.AssessmentList"
+                  android:parentActivityName = ".course_activities.CourseDetails"/>
+        <activity android:name=".mentor_activities.EditMentor"
+                  android:parentActivityName = ".course_activities.CourseDetails"/>
+        <activity android:name=".mentor_activities.AddMentor"
+                  android:parentActivityName = ".course_activities.CourseDetails"/>
+        <activity android:name=".course_activities.EditCourse"
+                  android:parentActivityName = ".course_activities.CourseDetails"/>
+        <activity android:name=".course_activities.CourseDetails"
+                  android:parentActivityName = ".course_activities.CourseList"/>
+        <activity android:name=".TermDetails"
+                  android:parentActivityName = ".Term_Activities.TermList"/>
+        <activity android:name=".course_activities.AddCourse"
+                  android:parentActivityName = ".course_activities.CourseList"/>
+        <activity android:name=".course_activities.CourseList"
+                  android:parentActivityName = ".TermDetails"/>
+        <activity android:name=".Term_Activities.EditTerm"
+                  android:parentActivityName = ".TermDetails"/>
+        <activity android:name=".Term_Activities.AddTerm"
+                  android:parentActivityName = ".Term_Activities.TermList"/>
+        <activity android:name=".Term_Activities.TermList"
+                  android:parentActivityName = ".activities.MainActivity"/>
         <activity android:name=".activities.MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
