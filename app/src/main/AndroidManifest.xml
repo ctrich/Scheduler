@@ -11,6 +11,7 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         tools:ignore="AllowBackup,GoogleAppIndexingWarning">
+        <receiver android:name=".util.MyReceiver" />
         <activity android:name=".note_activities.EditNote"
                   android:parentActivityName = ".note_activities.NoteList"></activity>
         <activity android:name=".note_activities.AddNote"
@@ -43,9 +44,9 @@
                   android:parentActivityName = ".TermDetails"/>
         <activity android:name=".Term_Activities.AddTerm"
                   android:parentActivityName = ".Term_Activities.TermList"/>
-        <activity android:name=".Term_Activities.TermList"
-                  android:parentActivityName = ".activities.MainActivity"/>
+        <activity android:name=".Term_Activities.TermList"/>
         <activity android:name=".activities.MainActivity">
+
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 

@@ -2,17 +2,20 @@ package com.example.c196studentscheduler.adapter;
 
 import android.content.Context;
 import android.content.Intent;
+import android.net.Uri;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
+import androidx.core.app.ShareCompat;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.c196studentscheduler.R;
 import com.example.c196studentscheduler.entity.Note;
 import com.example.c196studentscheduler.note_activities.EditNote;
+import com.example.c196studentscheduler.note_activities.NoteList;
 import com.example.c196studentscheduler.util.Constants;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
@@ -53,6 +56,29 @@ public class NoteListAdapter extends RecyclerView.Adapter<NoteListAdapter.ViewHo
                 context.startActivity(intent);
             }
         });
+
+        holder.emailFab.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+//                Intent intent = new Intent(Intent.ACTION_SEND);
+//                intent.setType("text/plain");
+//                intent.putExtra(Intent.EXTRA_EMAIL, "emailaddress@emailaddress.com");
+//                intent.putExtra(Intent.EXTRA_SUBJECT, "Notes");
+//                intent.putExtra(Intent.EXTRA_TEXT, holder.noteText.getText().toString());
+//                context.startActivity(Intent.createChooser(intent, "Send Email"));
+
+
+//                String to = "test@gmail.com";
+                String subject= "Notes";
+                String body= notes.get(position).getNoteText();
+                String mailTo = "mailto:" +
+                        "?&subject=" + Uri.encode(subject) +
+                        "&body=" + Uri.encode(body);
+                Intent emailIntent = new Intent(Intent.ACTION_VIEW);
+                emailIntent.setData(Uri.parse(mailTo));
+                context.startActivity(emailIntent);
+            }
+        });
     }
 
     @Override
@@ -65,6 +91,8 @@ public class NoteListAdapter extends RecyclerView.Adapter<NoteListAdapter.ViewHo
         TextView noteText;
         @BindView(R.id.note_list_edit_fab)
         FloatingActionButton editFab;
+        @BindView(R.id.note_list_email_fab)
+        FloatingActionButton emailFab;
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
 

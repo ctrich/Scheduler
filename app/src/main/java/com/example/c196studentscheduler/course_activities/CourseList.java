@@ -12,6 +12,7 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.Toast;
 
 import com.example.c196studentscheduler.R;
 import com.example.c196studentscheduler.TermDetails;
@@ -52,7 +53,6 @@ public class CourseList extends AppCompatActivity {
 
         Bundle extras = getIntent().getExtras();
         termId = extras.getInt(Constants.TERM_ID_KEY);
-
 
         ButterKnife.bind(this);
         initRecyclerView();

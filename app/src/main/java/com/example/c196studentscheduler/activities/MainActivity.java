@@ -20,12 +20,10 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
-        setTitle(Constants.HOME_SCREEN_TITLE);
+        showTerm();
     }
 
-    public void showTerm(View view) {
-
+    public void showTerm() {
         Intent i = new Intent(this, TermList.class);
         startActivity(i);
     }

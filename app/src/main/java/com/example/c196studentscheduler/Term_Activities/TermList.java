@@ -39,8 +39,6 @@ public class TermList extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_term_list);
         setTitle(Constants.TERM_LIST_TITLE);
-        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-
 
         ButterKnife.bind(this);
         initRecyclerView();

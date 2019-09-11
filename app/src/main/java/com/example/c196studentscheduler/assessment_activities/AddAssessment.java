@@ -3,8 +3,12 @@ package com.example.c196studentscheduler.assessment_activities;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.lifecycle.ViewModelProviders;
 
+import android.app.AlarmManager;
+import android.app.PendingIntent;
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
@@ -17,17 +21,22 @@ import android.widget.Toast;
 import com.example.c196studentscheduler.R;
 import com.example.c196studentscheduler.entity.Assessment;
 import com.example.c196studentscheduler.util.Constants;
+import com.example.c196studentscheduler.util.MyReceiver;
 import com.example.c196studentscheduler.viewmodel.AssessViewModel;
 import com.example.c196studentscheduler.viewmodel.AssessViewModelFactory;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.Calendar;
 import java.util.Date;
+import java.util.TimeZone;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
 public class AddAssessment extends AppCompatActivity {
+    private static final String TAG = "AddAssessment";
+
     @BindView(R.id.assess_add_title)
     TextView title;
     @BindView(R.id.assess_add_goal)
@@ -46,6 +55,7 @@ public class AddAssessment extends AppCompatActivity {
     private int courseId;
     private Assessment currentAssessment;
     private RadioButton radioButton;
+    private String aGoal;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -76,7 +86,7 @@ public class AddAssessment extends AppCompatActivity {
     }
 
     public void saveAssess(View view) {
-        String aGoal = goal.getText().toString();
+        aGoal = goal.getText().toString();
         String assessTitle = title.getText().toString();
         int selectedId = radioGroup.getCheckedRadioButtonId();
         radioButton = findViewById(selectedId);
@@ -85,6 +95,10 @@ public class AddAssessment extends AppCompatActivity {
 
             currentAssessment = new Assessment(courseId, assessTitle, radioButton.getText().toString(), date);
             assessViewModel.addAssessment(currentAssessment);
+
+            if (reminder.isChecked()) {
+                notification();
+            }
 
             Intent intent = new Intent(this, AssessmentList.class);
             intent.putExtra(Constants.COURSE_ID_KEY, courseId);
@@ -115,4 +129,26 @@ public class AddAssessment extends AppCompatActivity {
         return date;
     }
 
+    public void notification() {
+        int month =Integer.parseInt(aGoal.substring(0, 2)) - 1;
+        int day = Integer.parseInt(aGoal.substring(3, 5));
+        int year = Integer.parseInt(aGoal.substring(6));
+        String notificationContext = "Assessment";
+
+
+        Calendar cal = Calendar.getInstance();
+        cal.clear();
+        cal.set(year,month,day, 8, 30);
+
+        Intent intent=new Intent(AddAssessment.this, MyReceiver.class);
+        intent.putExtra(Constants.NOTIFICATION_TYPE, notificationContext);
+        intent.putExtra(Constants.ASSESSMENT_NAME, title.getText().toString());
+        PendingIntent sender= PendingIntent.getBroadcast(AddAssessment.this,0,intent,0);
+        AlarmManager alarmManager = (AlarmManager)getSystemService(Context.ALARM_SERVICE);
+        alarmManager.set(AlarmManager.RTC_WAKEUP, cal.getTimeInMillis(), sender);
+
+    }
+
 }
+
+
