@@ -3,6 +3,7 @@ package com.example.c196studentscheduler.util;
 import android.app.Notification;
 import android.app.NotificationChannel;
 import android.app.NotificationManager;
+import android.content.ActivityNotFoundException;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
@@ -18,7 +19,8 @@ import static android.content.Context.NOTIFICATION_SERVICE;
 public class MyReceiver extends BroadcastReceiver {
 
     static int notificationID;
-    String date;
+    String startChannelName = "START CHANNEL";
+    String startChannelId = "com.example.c196studentscheduler.Start";
     String title;
     String notificationType;
     String contentText;
@@ -31,7 +33,7 @@ public class MyReceiver extends BroadcastReceiver {
         if(notificationType.equals("Assessment")) {
             title = intent.getStringExtra(Constants.ASSESSMENT_NAME);
             contentText = title + " is due today!";
-            contentTitle = "Assessment Due";
+            contentTitle = "Assessment Due!";
         } else if (notificationType.equals("course_start")) {
             title = intent.getStringExtra(Constants.COURSE_NAME);
             contentText = title + " starts today!";
@@ -41,16 +43,15 @@ public class MyReceiver extends BroadcastReceiver {
             contentText = title + " ends today";
             contentTitle = "End of Course";
         }
-            Toast.makeText(context, "Notification", Toast.LENGTH_LONG).show();
-            createNotificationChannel(context, Constants.CHANNEL_ID);
-            Notification n = new NotificationCompat.Builder(context, Constants.CHANNEL_ID)
-                    .setSmallIcon(R.drawable.ic_launcher_foreground)
-                    .setContentText(contentText)
-                    .setContentTitle(contentTitle).build();
 
-            NotificationManager notificationManager = (NotificationManager) context.getSystemService(NOTIFICATION_SERVICE);
-            notificationManager.notify(notificationID++, n);
+        createNotificationChannel(context, startChannelId, startChannelName);
+        Notification n = new NotificationCompat.Builder(context, startChannelId)
+                .setSmallIcon(R.drawable.ic_launcher_foreground)
+                .setContentText(contentText)
+                .setContentTitle(contentTitle).build();
 
+        NotificationManager notificationManager = (NotificationManager) context.getSystemService(NOTIFICATION_SERVICE);
+        notificationManager.notify(notificationID++, n);
 
 
 
@@ -58,13 +59,13 @@ public class MyReceiver extends BroadcastReceiver {
         // an Intent broadcast.
         // throw new UnsupportedOperationException("Not yet implemented");
     }
-    private void createNotificationChannel(Context context, String CHANNEL_ID) {
+    private void createNotificationChannel(Context context, String CHANNEL_ID, String name) {
         // Create the NotificationChannel, but only on API 26+ because
         // the NotificationChannel class is new and not in the support library
 
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
             int importance = NotificationManager.IMPORTANCE_DEFAULT;
-            NotificationChannel channel = new NotificationChannel(CHANNEL_ID, Constants.ANDROID_CHANNEL_NAME, importance);
+            NotificationChannel channel = new NotificationChannel(CHANNEL_ID, name, importance);
             channel.setDescription(Constants.DESCRIPTION);
             // Register the channel with the system; you can't change the importance
             // or other notification behaviors after this

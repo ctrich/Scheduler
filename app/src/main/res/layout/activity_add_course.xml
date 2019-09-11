@@ -135,8 +135,11 @@
                 android:layout_height="wrap_content"
                 android:layout_marginStart="16dp"
                 android:layout_marginLeft="16dp"
+                android:layout_marginEnd="8dp"
+                android:layout_marginRight="8dp"
                 android:text="Start Reminder"
                 app:layout_constraintBaseline_toBaselineOf="@+id/add_course_sdate"
+                app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toEndOf="@+id/add_course_sdate" />
 
             <CheckBox
@@ -145,8 +148,11 @@
                 android:layout_height="wrap_content"
                 android:layout_marginStart="16dp"
                 android:layout_marginLeft="16dp"
+                android:layout_marginEnd="8dp"
+                android:layout_marginRight="8dp"
                 android:text="End Reminder"
                 app:layout_constraintBaseline_toBaselineOf="@+id/add_course_edate"
+                app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toEndOf="@+id/add_course_edate" />
 
         </androidx.constraintlayout.widget.ConstraintLayout>

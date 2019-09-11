@@ -110,7 +110,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginStart="16dp"
                 android:layout_marginLeft="16dp"
-                android:ems="10"
+                android:ems="6"
                 android:hint="(555)555-5555"
                 app:layout_constraintBaseline_toBaselineOf="@+id/textView29"
                 app:layout_constraintStart_toEndOf="@+id/textView29" />

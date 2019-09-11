@@ -13,6 +13,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 
+import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
@@ -41,6 +42,7 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 
 public class AddCourse extends AppCompatActivity {
+    private static final String TAG = "AddCourse";
 
     @BindView(R.id.add_course_title)
     EditText courseTitle;
@@ -181,10 +183,11 @@ public class AddCourse extends AppCompatActivity {
         cal.clear();
         cal.set(year,month,day, 8, 30);
 
-        Intent intent=new Intent(this, MyReceiver.class);
+        Intent intent = new Intent(this, MyReceiver.class);
         intent.putExtra(Constants.NOTIFICATION_TYPE, notificationContext);
         intent.putExtra(Constants.COURSE_NAME, courseTitle.getText().toString());
-        PendingIntent sender= PendingIntent.getBroadcast(this,0,intent,0);
+        int random = (int)System.currentTimeMillis();
+        PendingIntent sender= PendingIntent.getBroadcast(this,random,intent,0);
         AlarmManager alarmManager = (AlarmManager)getSystemService(Context.ALARM_SERVICE);
         alarmManager.set(AlarmManager.RTC_WAKEUP, cal.getTimeInMillis(), sender);
 

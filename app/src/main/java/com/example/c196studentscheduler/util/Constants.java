@@ -24,10 +24,7 @@ public class Constants {
     public static final String NOTES_LIST_TITLE = "Note List";
     public static final String NOTES_ADD_TITLE = "Add Note";
     public static final String NOTES_EDIT_TITLE = "Edit Note";
-    public static final String CHANNEL_ID="com.example.c196studentscheduler.ID";
-    public static final String ANDROID_CHANNEL_NAME = "ANDROID CHANNEL";
     public static final String DESCRIPTION =    "Reminders";
-    public static final String ASSESSMENT_GOAL_DATE = "assessment_goal_date";
     public static final String ASSESSMENT_NAME = "assessment_name";
     public static final String NOTIFICATION_TYPE = "notification_type";
     public static final String COURSE_NAME = "course_name";

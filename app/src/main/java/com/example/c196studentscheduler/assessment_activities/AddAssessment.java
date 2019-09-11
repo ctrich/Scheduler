@@ -139,11 +139,12 @@ public class AddAssessment extends AppCompatActivity {
         Calendar cal = Calendar.getInstance();
         cal.clear();
         cal.set(year,month,day, 8, 30);
-
+        Log.d(TAG, "notification: " + month + " " + day + " " + year);
         Intent intent=new Intent(AddAssessment.this, MyReceiver.class);
         intent.putExtra(Constants.NOTIFICATION_TYPE, notificationContext);
         intent.putExtra(Constants.ASSESSMENT_NAME, title.getText().toString());
-        PendingIntent sender= PendingIntent.getBroadcast(AddAssessment.this,0,intent,0);
+        int random = (int)System.currentTimeMillis();
+        PendingIntent sender= PendingIntent.getBroadcast(AddAssessment.this,random,intent,0);
         AlarmManager alarmManager = (AlarmManager)getSystemService(Context.ALARM_SERVICE);
         alarmManager.set(AlarmManager.RTC_WAKEUP, cal.getTimeInMillis(), sender);
 

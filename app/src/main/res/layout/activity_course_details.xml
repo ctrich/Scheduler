@@ -143,9 +143,12 @@
                 android:layout_height="48dp"
                 android:layout_marginStart="16dp"
                 android:layout_marginLeft="16dp"
+                android:layout_marginEnd="16dp"
+                android:layout_marginRight="16dp"
                 android:onClick="viewNotes"
                 android:text="View Notes"
                 app:layout_constraintBaseline_toBaselineOf="@+id/course_d_assess_btn"
+                app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toEndOf="@+id/course_d_assess_btn" />
 
             <androidx.recyclerview.widget.RecyclerView
@@ -164,9 +167,12 @@
                 android:layout_height="wrap_content"
                 android:layout_marginStart="56dp"
                 android:layout_marginLeft="56dp"
+                android:layout_marginEnd="16dp"
+                android:layout_marginRight="16dp"
                 android:onClick="goToAddMentor"
                 android:text="Add Mentor"
                 app:layout_constraintBottom_toBottomOf="@+id/course_d_end"
+                app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toEndOf="@+id/course_d_end" />
 
         </androidx.constraintlayout.widget.ConstraintLayout>
