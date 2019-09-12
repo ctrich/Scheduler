@@ -144,26 +144,31 @@ public class EditAssessment extends AppCompatActivity {
             Toast.makeText(this, "All fields are required", Toast.LENGTH_SHORT).show();
             return;
         } else {
-            date = goal.getText().toString();
+
             //Get the selected radio button
             int selectedId = radioGroup.getCheckedRadioButtonId();
             radioButton = findViewById(selectedId);
-
-            try {
-                //Convert the String date to a Date
-                Date goalD = convertStringToDate(date);
-                currentAssessment = new Assessment(assessmentId, courseId, title.getText().toString(), radioButton.getText().toString(), goalD);
-                assessViewModel.updateAssessment(currentAssessment);
-                //Call the notification function if the user selected reminder
-                if (reminder.isChecked()) {
-                    notification();
+            date = goal.getText().toString();
+            //Check for two digit month, two digit day and four digit year
+            if (date.length() == 10) {
+                try {
+                    //Convert the String date to a Date
+                    Date goalD = convertStringToDate(date);
+                    currentAssessment = new Assessment(assessmentId, courseId, title.getText().toString(), radioButton.getText().toString(), goalD);
+                    assessViewModel.updateAssessment(currentAssessment);
+                    //Call the notification function if the user selected reminder
+                    if (reminder.isChecked()) {
+                        notification();
+                    }
+                    //return to the assessment details activity after the update
+                    Intent intent = new Intent(this, AssessmentDetails.class);
+                    intent.putExtra(Constants.ASSESSMENT_ID_KEY, assessmentId);
+                    startActivity(intent);
+                } catch (ParseException e) {
+                    e.printStackTrace();
+                    Toast.makeText(this, "Invalid Date format", Toast.LENGTH_LONG).show();
                 }
-                //return to the assessment details activity after the update
-                Intent intent = new Intent(this, AssessmentDetails.class);
-                intent.putExtra(Constants.ASSESSMENT_ID_KEY, assessmentId);
-                startActivity(intent);
-            } catch (ParseException e) {
-                e.printStackTrace();
+            } else {
                 Toast.makeText(this, "Invalid Date", Toast.LENGTH_LONG).show();
             }
         }

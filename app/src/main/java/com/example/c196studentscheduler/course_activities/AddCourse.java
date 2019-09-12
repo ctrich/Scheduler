@@ -104,31 +104,36 @@ public class AddCourse extends AppCompatActivity {
             Toast.makeText(this, "All fields are required", Toast.LENGTH_SHORT).show();
             return;
         } else {
-            String sd = sDate.getText().toString();
-            String ed = eDate.getText().toString();
+
             String courseName = courseTitle.getText().toString();
             String status = courseSatus.getText().toString();
+            String sd = sDate.getText().toString();
+            String ed = eDate.getText().toString();
+            //Check for two digit month, two digit day and four digit year
+            if (sd.length() == 10 && ed.length() == 10) {
+                try {
+                    Date startD = convertStringToDate(sd);
+                    Date endD = convertStringToDate(ed);
+                    if (endD.compareTo(startD) >= 0) {
+                        currentCourse = new Course(courseName, termId, status, startD, endD);
+                        courseViewModel.addCourse(currentCourse);
+                        if (startReminder.isChecked()) {
+                            notification(sd, "course_start");
+                        }
+                        if (endReminder.isChecked()) {
+                            notification(ed, "course_end");
+                        }
 
-            try {
-                Date startD = convertStringToDate(sd);
-                Date endD = convertStringToDate(ed);
-                if (endD.compareTo(startD) >= 0) {
-                    currentCourse = new Course(courseName, termId, status, startD, endD);
-                    courseViewModel.addCourse(currentCourse);
-                    if (startReminder.isChecked()) {
-                        notification(sd, "course_start");
+                        Intent intent = new Intent(this, CourseList.class);
+                        intent.putExtra(Constants.TERM_ID_KEY, termId);
+                        startActivity(intent);
+                    } else {
+                        Toast.makeText(this, "End Date can't be before Start Date", Toast.LENGTH_SHORT).show();
                     }
-                    if (endReminder.isChecked()) {
-                        notification(ed, "course_end");
-                    }
-
-                    Intent intent = new Intent(this, CourseList.class);
-                    intent.putExtra(Constants.TERM_ID_KEY, termId);
-                    startActivity(intent);
-                } else {
-                    Toast.makeText(this, "End Date can't be before Start Date", Toast.LENGTH_SHORT).show();
+                } catch (ParseException e) {
+                    Toast.makeText(this, "Invalid Date format", Toast.LENGTH_LONG).show();
                 }
-            } catch (ParseException e) {
+            } else {
                 Toast.makeText(this, "Invalid Date", Toast.LENGTH_LONG).show();
             }
         }

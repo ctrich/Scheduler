@@ -149,22 +149,26 @@ public class EditTerm extends AppCompatActivity {
 
             String sd = editSDate.getText().toString();
             String ed = editEDate.getText().toString();
-
-            try {
-                Date startD = convertStringToDate(sd);
-                Date endD = convertStringToDate(ed);
-                //If the end date is before the start date display an error message
-                if (endD.compareTo(startD) >= 0) {
-                    currentTerm = new Term(termId, editTitle.getText().toString(), startD, endD);
-                    termViewModel.updateTerm(currentTerm);
-                    Intent intent = new Intent(this, TermDetails.class);
-                    intent.putExtra(Constants.TERM_ID_KEY, termId);
-                    startActivity(intent);
-                } else {
-                    Toast.makeText(this, "End Date can't be before Start Date", Toast.LENGTH_SHORT).show();
+            //Check for two digit month, two digit day and four digit year
+            if (sd.length() == 10 && ed.length() == 10) {
+                try {
+                    Date startD = convertStringToDate(sd);
+                    Date endD = convertStringToDate(ed);
+                    //If the end date is before the start date display an error message
+                    if (endD.compareTo(startD) >= 0) {
+                        currentTerm = new Term(termId, editTitle.getText().toString(), startD, endD);
+                        termViewModel.updateTerm(currentTerm);
+                        Intent intent = new Intent(this, TermDetails.class);
+                        intent.putExtra(Constants.TERM_ID_KEY, termId);
+                        startActivity(intent);
+                    } else {
+                        Toast.makeText(this, "End Date can't be before Start Date", Toast.LENGTH_SHORT).show();
+                    }
+                } catch (ParseException e) {
+                    //If the date is not entered in the right format display an error message
+                    Toast.makeText(this, "Invalid Date format", Toast.LENGTH_LONG).show();
                 }
-            } catch (ParseException e) {
-                //If the date is not entered in the right format display an error message
+            } else {
                 Toast.makeText(this, "Invalid Date", Toast.LENGTH_LONG).show();
             }
         }

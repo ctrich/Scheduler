@@ -109,21 +109,25 @@ public class AddAssessment extends AppCompatActivity {
             String assessTitle = title.getText().toString();
             int selectedId = radioGroup.getCheckedRadioButtonId();
             radioButton = findViewById(selectedId);
-            try {
-                //Convert the String to Date
-                Date date = convertStringToDate(aGoal);
-                //Create a new assessment to insert into the database
-                currentAssessment = new Assessment(courseId, assessTitle, radioButton.getText().toString(), date);
-                assessViewModel.addAssessment(currentAssessment);
+            if (aGoal.length() == 10) {
+                try {
+                    //Convert the String to Date
+                    Date date = convertStringToDate(aGoal);
+                    //Create a new assessment to insert into the database
+                    currentAssessment = new Assessment(courseId, assessTitle, radioButton.getText().toString(), date);
+                    assessViewModel.addAssessment(currentAssessment);
 
-                if (reminder.isChecked()) {
-                    notification();
+                    if (reminder.isChecked()) {
+                        notification();
+                    }
+                    //Pass the assessments courseID to the assessment list activity
+                    Intent intent = new Intent(this, AssessmentList.class);
+                    intent.putExtra(Constants.COURSE_ID_KEY, courseId);
+                    startActivity(intent);
+                } catch (ParseException e) {
+                    Toast.makeText(this, "Invalid Date format", Toast.LENGTH_LONG).show();
                 }
-                //Pass the assessments courseID to the assessment list activity
-                Intent intent = new Intent(this, AssessmentList.class);
-                intent.putExtra(Constants.COURSE_ID_KEY, courseId);
-                startActivity(intent);
-            } catch (ParseException e) {
+            } else {
                 Toast.makeText(this, "Invalid Date", Toast.LENGTH_LONG).show();
             }
         }

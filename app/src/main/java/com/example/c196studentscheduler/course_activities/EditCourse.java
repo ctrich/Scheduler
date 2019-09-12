@@ -152,31 +152,36 @@ public class EditCourse extends AppCompatActivity {
         } else {
             String sd = courseStart.getText().toString();
             String ed = courseEnd.getText().toString();
-            try {
-                //convert the edit text string to dates
-                Date startD = convertStringToDate(sd);
-                Date endD = convertStringToDate(ed);
-                //if the end date is before the start date show the user an error message
-                if (endD.compareTo(startD) >= 0) {
-                    currentCourse = new Course(courseId, title.getText().toString(), termId, status.getText().toString(), startD, endD);
-                    //call the update course from the viewmodel
-                    courseViewModel.updateCourse(currentCourse);
+            //Check for two digit month, two digit day and four digit year
+            if (sd.length() == 10 && ed.length() == 10) {
+                try {
+                    //convert the edit text string to dates
+                    Date startD = convertStringToDate(sd);
+                    Date endD = convertStringToDate(ed);
+                    //if the end date is before the start date show the user an error message
+                    if (endD.compareTo(startD) >= 0) {
+                        currentCourse = new Course(courseId, title.getText().toString(), termId, status.getText().toString(), startD, endD);
+                        //call the update course from the viewmodel
+                        courseViewModel.updateCourse(currentCourse);
 
-                    if (startReminder.isChecked()) {
-                        notification(sd, "course_start");
-                    }
-                    if (endReminder.isChecked()) {
-                        notification(ed, "course_end");
-                    }
+                        if (startReminder.isChecked()) {
+                            notification(sd, "course_start");
+                        }
+                        if (endReminder.isChecked()) {
+                            notification(ed, "course_end");
+                        }
 
-                    Intent intent = new Intent(this, CourseDetails.class);
-                    intent.putExtra(Constants.COURSE_ID_KEY, courseId);
-                    startActivity(intent);
-                } else {
-                    Toast.makeText(this, "End Date can't be before Start Date", Toast.LENGTH_SHORT).show();
+                        Intent intent = new Intent(this, CourseDetails.class);
+                        intent.putExtra(Constants.COURSE_ID_KEY, courseId);
+                        startActivity(intent);
+                    } else {
+                        Toast.makeText(this, "End Date can't be before Start Date", Toast.LENGTH_SHORT).show();
+                    }
+                } catch (ParseException e) {
+                    e.printStackTrace();
+                    Toast.makeText(this, "Invalid Date format", Toast.LENGTH_LONG).show();
                 }
-            } catch (ParseException e) {
-                e.printStackTrace();
+            } else {
                 Toast.makeText(this, "Invalid Date", Toast.LENGTH_LONG).show();
             }
         }

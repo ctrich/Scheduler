@@ -84,19 +84,24 @@ public class AddTerm extends AppCompatActivity {
         } else {
             String sd = startDate.getText().toString();
             String ed = endDate.getText().toString();
-            try {
-                Date startD = convertStringToDate(sd);
-                Date endD = convertStringToDate(ed);
-                //if the end date id before the start date show an error message
-                if (endD.compareTo(startD) >= 0) {
-                    currentTerm = new Term(termTitle.getText().toString(), startD, endD);
-                    termViewModel.addTerms(currentTerm);
-                    Intent intent = new Intent(this, TermList.class);
-                    startActivity(intent);
-                } else {
-                    Toast.makeText(this, "End Date can't be before Start Date", Toast.LENGTH_SHORT).show();
+            //Check for two digit month, two digit day and four digit year
+            if (sd.length() == 10 && ed.length() == 10) {
+                try {
+                    Date startD = convertStringToDate(sd);
+                    Date endD = convertStringToDate(ed);
+                    //if the end date id before the start date show an error message
+                    if (endD.compareTo(startD) >= 0) {
+                        currentTerm = new Term(termTitle.getText().toString(), startD, endD);
+                        termViewModel.addTerms(currentTerm);
+                        Intent intent = new Intent(this, TermList.class);
+                        startActivity(intent);
+                    } else {
+                        Toast.makeText(this, "End Date can't be before Start Date", Toast.LENGTH_SHORT).show();
+                    }
+                } catch (ParseException e) {
+                    Toast.makeText(this, "Invalid Date format", Toast.LENGTH_LONG).show();
                 }
-            } catch (ParseException e) {
+            } else {
                 Toast.makeText(this, "Invalid Date", Toast.LENGTH_LONG).show();
             }
         }
@@ -114,7 +119,7 @@ public class AddTerm extends AppCompatActivity {
      * @throws ParseException
      */
     public Date convertStringToDate(String sDate) throws ParseException {
-        SimpleDateFormat simpleDateFormat = new SimpleDateFormat("MM/dd/yyyy");
+         SimpleDateFormat simpleDateFormat = new SimpleDateFormat("MM/dd/yyyy");
         simpleDateFormat.setLenient(false);
         Date date = simpleDateFormat.parse(sDate);
         return date;
