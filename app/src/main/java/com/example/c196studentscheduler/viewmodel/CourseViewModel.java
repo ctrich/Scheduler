@@ -14,13 +14,18 @@ import java.util.List;
 import java.util.concurrent.Executor;
 import java.util.concurrent.Executors;
 
-
+/**
+ * Chris Richardson
+ * C196
+ * Student ID #000895452
+ */
 public class CourseViewModel extends AndroidViewModel {
-
+    //Used to display course data in the edit activity
     public MutableLiveData<Course> mLiveCourse = new MutableLiveData<>();
     public LiveData<List<Course>> mCourses;
     public LiveData<List<Course>> mCourseByTerm;
     private SchedulerRepository schedulerRepository;
+    //Used to run functions in a background thread
     private Executor executor = Executors.newSingleThreadExecutor();
 
 
@@ -32,16 +37,29 @@ public class CourseViewModel extends AndroidViewModel {
         mCourses = schedulerRepository.mCourses;
     }
 
-
+    /**
+     *
+     * @param termId
+     * @return the number of courses that belongs to the termId
+     */
     public int getCourseCount(int termId) {
         return schedulerRepository.numCoursesInTerm(termId);
     }
 
-
+    /**
+     *
+     * @param course
+     * Adds a new course to the database
+     */
     public void addCourse(Course course) {
         executor.execute(() -> schedulerRepository.createCourse(course));
     }
 
+    /**
+     *
+     * @param course
+     * Updates and existing course in the database
+     */
     public void updateCourse(Course course) {
         executor.execute(new Runnable() {
             @Override
@@ -51,6 +69,11 @@ public class CourseViewModel extends AndroidViewModel {
         });
     }
 
+    /**
+     *
+     * @param course
+     * Deletes a course from the database
+     */
     public void deleteCourse(Course course) {
         executor.execute(new Runnable() {
             @Override
@@ -60,6 +83,11 @@ public class CourseViewModel extends AndroidViewModel {
         });
     }
 
+    /**
+     *
+     * @param courseId
+     * Displays the course data in course details
+     */
     public void loadData(int courseId) {
         executor.execute(new Runnable() {
             @Override

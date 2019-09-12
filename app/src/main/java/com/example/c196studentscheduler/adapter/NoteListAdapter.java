@@ -9,13 +9,12 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
-import androidx.core.app.ShareCompat;
+
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.c196studentscheduler.R;
 import com.example.c196studentscheduler.entity.Note;
 import com.example.c196studentscheduler.note_activities.EditNote;
-import com.example.c196studentscheduler.note_activities.NoteList;
 import com.example.c196studentscheduler.util.Constants;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
@@ -23,7 +22,13 @@ import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
-
+/**
+ * Chris Richardson
+ * C196
+ * Student ID #000895452
+ *
+ * Responsible for displaying all mentors for the selected course in a recyclerview
+ */
 public class NoteListAdapter extends RecyclerView.Adapter<NoteListAdapter.ViewHolder> {
 
     private final Context context;
@@ -47,7 +52,7 @@ public class NoteListAdapter extends RecyclerView.Adapter<NoteListAdapter.ViewHo
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
 
         holder.noteText.setText(notes.get(position).getNoteText());
-
+        //Pass the select notes noteID to the edit note activity
         holder.editFab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -56,19 +61,10 @@ public class NoteListAdapter extends RecyclerView.Adapter<NoteListAdapter.ViewHo
                 context.startActivity(intent);
             }
         });
-
+        //Opens the email client and places the note text in the email body
         holder.emailFab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-//                Intent intent = new Intent(Intent.ACTION_SEND);
-//                intent.setType("text/plain");
-//                intent.putExtra(Intent.EXTRA_EMAIL, "emailaddress@emailaddress.com");
-//                intent.putExtra(Intent.EXTRA_SUBJECT, "Notes");
-//                intent.putExtra(Intent.EXTRA_TEXT, holder.noteText.getText().toString());
-//                context.startActivity(Intent.createChooser(intent, "Send Email"));
-
-
-//                String to = "test@gmail.com";
                 String subject= "Notes";
                 String body= notes.get(position).getNoteText();
                 String mailTo = "mailto:" +
@@ -81,6 +77,10 @@ public class NoteListAdapter extends RecyclerView.Adapter<NoteListAdapter.ViewHo
         });
     }
 
+    /**
+     *
+     * @return the number of notes for the selected course
+     */
     @Override
     public int getItemCount() {
         return notes.size();

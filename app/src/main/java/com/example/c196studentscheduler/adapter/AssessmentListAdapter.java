@@ -16,12 +16,18 @@ import com.example.c196studentscheduler.entity.Assessment;
 import com.example.c196studentscheduler.util.Constants;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
-import java.lang.invoke.ConstantCallSite;
 import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
+/**
+ * Chris Richardson
+ * C196
+ * Student ID #000895452
+ *
+ * Responsible for displaying all assessments for selected course in a recyclerview
+ */
 public class AssessmentListAdapter extends RecyclerView.Adapter<AssessmentListAdapter.ViewHolder> {
 
     private final List<Assessment> mAssessment;
@@ -45,6 +51,7 @@ public class AssessmentListAdapter extends RecyclerView.Adapter<AssessmentListAd
         holder.title.setText(mAssessment.get(position).getName());
         holder.type.setText(mAssessment.get(position).getType());
 
+        //Floating action button on the assessment list activity that leads to the assessment details page. Passes assessmentId using intent.
         holder.fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -62,6 +69,7 @@ public class AssessmentListAdapter extends RecyclerView.Adapter<AssessmentListAd
 
     @Override
     public int getItemCount() {
+        //returns the number of assessment for the course
         return mAssessment.size();
     }
 

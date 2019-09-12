@@ -22,7 +22,13 @@ import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
-
+/**
+ * Chris Richardson
+ * C196
+ * Student ID #000895452
+ *
+ * Responsible for displaying all mentors for selected course in a recyclerview
+ */
 public class MentorListAdapter extends RecyclerView.Adapter<MentorListAdapter.ViewHolder> {
 
     private final List<Mentor> mMentor;
@@ -47,10 +53,11 @@ public class MentorListAdapter extends RecyclerView.Adapter<MentorListAdapter.Vi
     @Override
     public void onBindViewHolder(@NonNull MentorListAdapter.ViewHolder holder, int position) {
         final Mentor mentor= mMentor.get(position);
+        //set text view text
         holder.mName.setText(mMentor.get(position).getName());
         holder.mPhone.setText(mMentor.get(position).getPhone());
         holder.mEmail.setText(mMentor.get(position).geteMail());
-
+        //Deletes the mentor
         holder.mDelete.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -73,6 +80,10 @@ public class MentorListAdapter extends RecyclerView.Adapter<MentorListAdapter.Vi
         super.onAttachedToRecyclerView(recyclerView);
     }
 
+    /**
+     *
+     * @return the number of mentors for the selected course
+     */
     @Override
     public int getItemCount() {
         return mMentor.size();

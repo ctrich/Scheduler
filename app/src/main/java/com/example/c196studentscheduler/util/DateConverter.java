@@ -3,7 +3,11 @@ package com.example.c196studentscheduler.util;
 import androidx.room.TypeConverter;
 
 import java.util.Date;
-
+/**
+ * Chris Richardson
+ * C196
+ * Student ID #000895452
+ */
 public class DateConverter {
 
     @TypeConverter

@@ -23,7 +23,13 @@ import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
-
+/**
+ * Chris Richardson
+ * C196
+ * Student ID #000895452
+ *
+ * Responsible for displaying all Term in a recyclerview
+ */
 public class TermListAdapter extends RecyclerView.Adapter<TermListAdapter.ViewHolder> {
 
     private final List<Term> mTerms;
@@ -49,11 +55,11 @@ public class TermListAdapter extends RecyclerView.Adapter<TermListAdapter.ViewHo
 
         String sDate = sdf.format(mTerms.get(position).getStartDate());
         String eDate = sdf.format(mTerms.get(position).getEndDate());
-
+        //Set the textview text for all term in the recyclerview
         holder.mTermTitle.setText(mTerms.get(position).getName());
         holder.mTermStart.setText(sDate);
         holder.mTermEnd.setText(eDate);
-
+        //Send the termId for the selected term to the term details activity
         holder.mFab.setOnClickListener(view -> {
             Intent intent = new Intent(context, TermDetails.class);
             intent.putExtra(Constants.TERM_ID_KEY, term.getTermId());
@@ -67,6 +73,10 @@ public class TermListAdapter extends RecyclerView.Adapter<TermListAdapter.ViewHo
         super.onAttachedToRecyclerView(recyclerView);
     }
 
+    /**
+     *
+     * @return the number of terms
+     */
     @Override
     public int getItemCount() {
         return mTerms.size();

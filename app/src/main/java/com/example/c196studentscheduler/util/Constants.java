@@ -1,8 +1,11 @@
 package com.example.c196studentscheduler.util;
-
+/**
+ * Chris Richardson
+ * C196
+ * Student ID #000895452
+ */
 public class Constants {
     public static final String TERM_ID_KEY = "term_id_key";
-    public static final String HOME_SCREEN_TITLE = "C196 Student Scheduler";
     public static final String TERM_LIST_TITLE = "Term List";
     public static final String TERM_DETAILS_TITLE = "Term Details";
     public static final String TERM_ADD_TITLE = "Add Term";
@@ -28,6 +31,7 @@ public class Constants {
     public static final String ASSESSMENT_NAME = "assessment_name";
     public static final String NOTIFICATION_TYPE = "notification_type";
     public static final String COURSE_NAME = "course_name";
+    public static final String EDITING_KEY = "editing_key";
 }
 
 

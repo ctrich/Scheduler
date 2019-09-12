@@ -4,14 +4,17 @@ import androidx.lifecycle.LiveData;
 import androidx.room.Dao;
 import androidx.room.Delete;
 import androidx.room.Insert;
-import androidx.room.OnConflictStrategy;
 import androidx.room.Query;
 import androidx.room.Update;
 
 import com.example.c196studentscheduler.entity.Mentor;
 
 import java.util.List;
-
+/**
+ * Chris Richardson
+ * C196
+ * Student ID #000895452
+ */
 @Dao
 public interface MentorDAO {
     @Insert

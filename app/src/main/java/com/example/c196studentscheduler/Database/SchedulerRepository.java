@@ -21,12 +21,15 @@ import java.util.List;
 import java.util.concurrent.ExecutionException;
 import java.util.concurrent.Executor;
 import java.util.concurrent.Executors;
-
+/**
+ * Chris Richardson
+ * C196
+ * Student ID #000895452
+ */
 public class SchedulerRepository {
     private static final String TAG = "SchedulerRepository";
-
+    //Access to all data access objects
     private TermDAO termDAO;
-
     private CourseDAO courseDAO;
     private MentorDAO mentorDAO;
     private NoteDAO noteDAO;
@@ -38,24 +41,8 @@ public class SchedulerRepository {
     private SchedulerRoomDatabase mDb;
     private Executor executor = Executors.newSingleThreadExecutor();
 
-//    private LiveData<List<Term>> allTerms;
-
-//    private LiveData<List<Course>> allCourses;
-//    private LiveData<List<Assessment>> allAssessments;
-//    private LiveData<List<Note>> allNotes;
-//    private LiveData<List<Mentor>> allMentors;
-
-
-//    public SchedulerRepository(TermDAO termDAO, CourseDAO courseDAO, MentorDAO mentorDAO, NoteDAO noteDAO, AssessmentDAO assessmentDAO) {
-//        this.termDAO = termDAO;
-//        this.courseDAO = courseDAO;
-//        this.mentorDAO = mentorDAO;
-//        this.noteDAO = noteDAO;
-//        this.assessmentDAO = assessmentDAO;
-//    }
-
     private static SchedulerRepository ourInstance;
-
+    //If an instance of the repository does not exist create one
     public static SchedulerRepository getInstance(Context context) {
         if (ourInstance == null) {
             ourInstance = new SchedulerRepository(context);
@@ -95,18 +82,6 @@ public class SchedulerRepository {
 
     public LiveData<List<Course>> getAllCourses() {
         return courseDAO.getAllCourses();
-    }
-
-    public LiveData<List<Mentor>> getAllMentors() {
-        return mentorDAO.getAllMentors();
-    }
-
-    public LiveData<List<Note>> getAllNotes() {
-        return noteDAO.getAllNotes();
-    }
-
-    public LiveData<List<Assessment>> getAllAssessments() {
-        return assessmentDAO.getAllAssessment();
     }
 
         //inserts
@@ -179,9 +154,6 @@ public class SchedulerRepository {
         return termDAO.getTermById(termId);
     }
 
-    public String getTermNameById(int termId) {
-        return courseDAO.getTermNameByTermId(termId);
-    }
 
     public int numCoursesInTerm(int termId) {
         try {

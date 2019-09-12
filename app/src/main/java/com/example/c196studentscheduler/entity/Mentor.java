@@ -5,11 +5,14 @@ import androidx.room.ColumnInfo;
 import androidx.room.Entity;
 import androidx.room.ForeignKey;
 import androidx.room.Ignore;
-import androidx.room.Index;
 import androidx.room.PrimaryKey;
 
 import static androidx.room.ForeignKey.CASCADE;
-
+/**
+ * Chris Richardson
+ * C196
+ * Student ID #000895452
+ */
 @Entity(tableName = "Mentors", foreignKeys=@ForeignKey(entity = Course.class,
                                                                                                         parentColumns = "CourseId",
                                                                                                         childColumns = "CourseId",

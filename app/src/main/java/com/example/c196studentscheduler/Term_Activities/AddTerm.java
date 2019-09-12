@@ -22,7 +22,11 @@ import java.util.Date;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
-
+/**
+ * Chris Richardson
+ * C196
+ * Student ID #000895452
+ */
 public class AddTerm extends AppCompatActivity {
     private static final String TAG = "AddTerm";
 
@@ -35,7 +39,6 @@ public class AddTerm extends AppCompatActivity {
     EditText endDate;
 
     private Term currentTerm;
-
     private TermViewModel termViewModel;
 
 
@@ -51,30 +54,51 @@ public class AddTerm extends AppCompatActivity {
         initViewModel();
     }
 
+    /**
+     * initialize the view model
+     */
     private void initViewModel() {
         termViewModel = ViewModelProviders.of(this)
                 .get(TermViewModel .class);
     }
 
+    /**
+     * Return the the term list when the devices back button is pressed
+     */
     @Override
     public void onBackPressed () {
         Intent intent = new Intent(this, TermList.class);
         startActivity(intent);
     }
 
+    /**
+     *
+     * @param view
+     * Insert a new term into the database
+     */
     public void saveTerm(View view){
-
-        String sd = startDate.getText().toString();
-        String ed = endDate.getText().toString();
-        try {
-            Date startD = convertStringToDate(sd);
-            Date endD = convertStringToDate(ed);
-            currentTerm = new Term(termTitle.getText().toString(), startD, endD);
-            termViewModel.addTerms(currentTerm);
-            Intent intent = new Intent(this, TermList.class);
-            startActivity(intent);
-        }catch (ParseException e) {
-            Toast.makeText(this, "Invalid Date", Toast.LENGTH_LONG  ).show();
+        //If all fields are not filled in show the user an error message
+        if (termTitle.getText().toString().isEmpty() || startDate.getText().toString().isEmpty() || endDate.getText().toString().isEmpty()) {
+            Toast.makeText(this, "All fields are required", Toast.LENGTH_SHORT).show();
+            return;
+        } else {
+            String sd = startDate.getText().toString();
+            String ed = endDate.getText().toString();
+            try {
+                Date startD = convertStringToDate(sd);
+                Date endD = convertStringToDate(ed);
+                //if the end date id before the start date show an error message
+                if (endD.compareTo(startD) >= 0) {
+                    currentTerm = new Term(termTitle.getText().toString(), startD, endD);
+                    termViewModel.addTerms(currentTerm);
+                    Intent intent = new Intent(this, TermList.class);
+                    startActivity(intent);
+                } else {
+                    Toast.makeText(this, "End Date can't be before Start Date", Toast.LENGTH_SHORT).show();
+                }
+            } catch (ParseException e) {
+                Toast.makeText(this, "Invalid Date", Toast.LENGTH_LONG).show();
+            }
         }
     }
 
@@ -83,9 +107,13 @@ public class AddTerm extends AppCompatActivity {
         startActivity(intent);
     }
 
-
+    /**
+     *
+     * @param sDate
+     * @return a date in MM/DD/YYYY format
+     * @throws ParseException
+     */
     public Date convertStringToDate(String sDate) throws ParseException {
-
         SimpleDateFormat simpleDateFormat = new SimpleDateFormat("MM/dd/yyyy");
         simpleDateFormat.setLenient(false);
         Date date = simpleDateFormat.parse(sDate);

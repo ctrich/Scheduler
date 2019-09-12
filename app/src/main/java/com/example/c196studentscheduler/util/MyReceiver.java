@@ -3,19 +3,20 @@ package com.example.c196studentscheduler.util;
 import android.app.Notification;
 import android.app.NotificationChannel;
 import android.app.NotificationManager;
-import android.content.ActivityNotFoundException;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Build;
-import android.widget.Toast;
-
 import androidx.core.app.NotificationCompat;
 
 import com.example.c196studentscheduler.R;
 
 import static android.content.Context.NOTIFICATION_SERVICE;
-
+/**
+ * Chris Richardson
+ * C196
+ * Student ID #000895452
+ */
 public class MyReceiver extends BroadcastReceiver {
 
     static int notificationID;
@@ -26,6 +27,13 @@ public class MyReceiver extends BroadcastReceiver {
     String contentText;
     String contentTitle;
 
+    /**
+     *
+     * @param context
+     * @param intent
+     *
+     * Set the title body text based on the notification type
+     */
     @Override
     public void onReceive(Context context, Intent intent) {
         notificationType = intent.getExtras().getString(Constants.NOTIFICATION_TYPE);
@@ -43,7 +51,7 @@ public class MyReceiver extends BroadcastReceiver {
             contentText = title + " ends today";
             contentTitle = "End of Course";
         }
-
+        //create the notification channel
         createNotificationChannel(context, startChannelId, startChannelName);
         Notification n = new NotificationCompat.Builder(context, startChannelId)
                 .setSmallIcon(R.drawable.ic_launcher_foreground)
@@ -53,16 +61,10 @@ public class MyReceiver extends BroadcastReceiver {
         NotificationManager notificationManager = (NotificationManager) context.getSystemService(NOTIFICATION_SERVICE);
         notificationManager.notify(notificationID++, n);
 
-
-
-        // TODO: This method is called when the BroadcastReceiver is receiving
-        // an Intent broadcast.
-        // throw new UnsupportedOperationException("Not yet implemented");
     }
     private void createNotificationChannel(Context context, String CHANNEL_ID, String name) {
         // Create the NotificationChannel, but only on API 26+ because
         // the NotificationChannel class is new and not in the support library
-
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
             int importance = NotificationManager.IMPORTANCE_DEFAULT;
             NotificationChannel channel = new NotificationChannel(CHANNEL_ID, name, importance);

@@ -10,7 +10,11 @@ package com.example.c196studentscheduler.entity;
         import java.util.Date;
 
         import static androidx.room.ForeignKey.CASCADE;
-
+/**
+ * Chris Richardson
+ * C196
+ * Student ID #000895452
+ */
 @Entity(tableName = "Assessments", foreignKeys = @ForeignKey(entity = Course.class,
                                                              parentColumns = "CourseId",
                                                              childColumns = "CourseId",

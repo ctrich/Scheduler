@@ -29,11 +29,14 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
-import java.util.TimeZone;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
-
+/**
+ * Chris Richardson
+ * C196
+ * Student ID #000895452
+ */
 public class AddAssessment extends AppCompatActivity {
     private static final String TAG = "AddAssessment";
 
@@ -61,6 +64,7 @@ public class AddAssessment extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_add_assessment);
+        //Set the title in the actionbar
         getSupportActionBar().setTitle(Constants.ASSESSMENT_ADD_TITLE);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         ButterKnife.bind(this);
@@ -70,6 +74,7 @@ public class AddAssessment extends AppCompatActivity {
     @Override
     public boolean onOptionsItemSelected(MenuItem item)
     {
+        //When the back button in the actionbar is presses, send the course id to the AssessmentList activity
         Intent intent = new Intent(this, AssessmentList.class);
         intent.putExtra(Constants.COURSE_ID_KEY, courseId);
         startActivity(intent);
@@ -77,37 +82,57 @@ public class AddAssessment extends AppCompatActivity {
     }
 
     private void initViewModel() {
+
         factory = new AssessViewModelFactory(this.getApplication());
+        //Instantiate a viewModel so we can access the database
         assessViewModel = ViewModelProviders.of(this, factory)
                 .get(AssessViewModel.class);
-
+        //Get the courseId so we can set it with the assessment
         Bundle extras = getIntent().getExtras();
         courseId = extras.getInt(Constants.COURSE_ID_KEY);
     }
 
+    /**
+     *
+     * @param view
+     *
+     * save a new assessment to the database
+     */
     public void saveAssess(View view) {
-        aGoal = goal.getText().toString();
-        String assessTitle = title.getText().toString();
-        int selectedId = radioGroup.getCheckedRadioButtonId();
-        radioButton = findViewById(selectedId);
-        try {
-            Date date = convertStringToDate(aGoal);
+        //check to see if all fields are filled in
+        if (title.getText().toString().isEmpty() || goal.getText().toString().isEmpty()) {
+            //display a message if all fields are not filled in and exit the function
+            Toast.makeText(this, "All fields are required", Toast.LENGTH_SHORT).show();
+            return;
+        } else {
+            aGoal = goal.getText().toString();
+            String assessTitle = title.getText().toString();
+            int selectedId = radioGroup.getCheckedRadioButtonId();
+            radioButton = findViewById(selectedId);
+            try {
+                //Convert the String to Date
+                Date date = convertStringToDate(aGoal);
+                //Create a new assessment to insert into the database
+                currentAssessment = new Assessment(courseId, assessTitle, radioButton.getText().toString(), date);
+                assessViewModel.addAssessment(currentAssessment);
 
-            currentAssessment = new Assessment(courseId, assessTitle, radioButton.getText().toString(), date);
-            assessViewModel.addAssessment(currentAssessment);
-
-            if (reminder.isChecked()) {
-                notification();
+                if (reminder.isChecked()) {
+                    notification();
+                }
+                //Pass the assessments courseID to the assessment list activity
+                Intent intent = new Intent(this, AssessmentList.class);
+                intent.putExtra(Constants.COURSE_ID_KEY, courseId);
+                startActivity(intent);
+            } catch (ParseException e) {
+                Toast.makeText(this, "Invalid Date", Toast.LENGTH_LONG).show();
             }
-
-            Intent intent = new Intent(this, AssessmentList.class);
-            intent.putExtra(Constants.COURSE_ID_KEY, courseId);
-            startActivity(intent);
-        }catch (ParseException e) {
-            Toast.makeText(this, "Invalid Date", Toast.LENGTH_LONG).show();
         }
     }
 
+    /**
+     * When the user presses the devices back button go to
+     * the assessmentList activity and pass the courseId
+     */
     @Override
     public void onBackPressed () {
         Intent intent = new Intent(this, AssessmentList.class);
@@ -115,13 +140,23 @@ public class AddAssessment extends AppCompatActivity {
         startActivity(intent);
     }
 
-
+    /**
+     *
+     * @param view
+     * Cancel the assessment add and pass go to the assessment list activity
+     */
     public void cancelAdd(View view) {
         Intent intent = new Intent(this, AssessmentList.class);
         intent.putExtra(Constants.COURSE_ID_KEY, courseId);
         startActivity(intent);
     }
 
+    /**
+     *
+     * @param sDate
+     * @return a date in MM/DD/YYYY format
+     * @throws ParseException
+     */
     public Date convertStringToDate(String sDate) throws ParseException {
         SimpleDateFormat simpleDateFormat = new SimpleDateFormat("MM/dd/yyyy");
         simpleDateFormat.setLenient(false);
@@ -129,22 +164,29 @@ public class AddAssessment extends AppCompatActivity {
         return date;
     }
 
+    /**
+     * Set a notification for the assessments goal date
+     */
     public void notification() {
+        //get the month, day, and year from the goal string
         int month =Integer.parseInt(aGoal.substring(0, 2)) - 1;
         int day = Integer.parseInt(aGoal.substring(3, 5));
         int year = Integer.parseInt(aGoal.substring(6));
         String notificationContext = "Assessment";
 
-
+        //Create a calendar and set the date for the assessment goal
         Calendar cal = Calendar.getInstance();
         cal.clear();
         cal.set(year,month,day, 8, 30);
-        Log.d(TAG, "notification: " + month + " " + day + " " + year);
+
         Intent intent=new Intent(AddAssessment.this, MyReceiver.class);
+        //Send the notification type and assessment title to display in the notification
         intent.putExtra(Constants.NOTIFICATION_TYPE, notificationContext);
         intent.putExtra(Constants.ASSESSMENT_NAME, title.getText().toString());
+        //Create a random int to use as the request code so it doesn't interfere with other notifications
         int random = (int)System.currentTimeMillis();
         PendingIntent sender= PendingIntent.getBroadcast(AddAssessment.this,random,intent,0);
+        //Set an alarm to wake the device and display a notification to a certain time
         AlarmManager alarmManager = (AlarmManager)getSystemService(Context.ALARM_SERVICE);
         alarmManager.set(AlarmManager.RTC_WAKEUP, cal.getTimeInMillis(), sender);
 

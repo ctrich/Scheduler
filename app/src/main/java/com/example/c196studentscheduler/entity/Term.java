@@ -6,7 +6,11 @@ import androidx.room.Entity;
 import androidx.room.Ignore;
 import androidx.room.PrimaryKey;
 import java.util.Date;
-
+/**
+ * Chris Richardson
+ * C196
+ * Student ID #000895452
+ */
 @Entity(tableName = "Terms")
 public class Term {
     @PrimaryKey(autoGenerate = true)

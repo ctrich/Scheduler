@@ -24,7 +24,11 @@ import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
-
+/**
+ * Chris Richardson
+ * C196
+ * Student ID #000895452
+ */
 public class TermList extends AppCompatActivity {
     private static final String TAG = "TermList";
     @BindView(R.id.term_recycler_view)
@@ -46,18 +50,30 @@ public class TermList extends AppCompatActivity {
 
     }
 
+    /**
+     * Load the main activity when the devices back button id pressed
+     */
     @Override
     public void onBackPressed () {
         Intent intent = new Intent(this, MainActivity.class);
         startActivity(intent);
     }
 
+    /**
+     *
+     * @param view
+     * Display the add term activity
+     */
     public void showAddTerm(View view) {
         Log.d(TAG, "showTerm: running");
         Intent intent = new Intent(this, AddTerm.class);
         startActivity(intent);
     }
 
+    /**
+     * initialize the view model and set the adapter
+     * to display the the list of terms in the recycler view
+     */
     private void initViewModel() {
         final Observer<List<Term>> termObserver = terms -> {
             termsData.clear();
@@ -76,6 +92,9 @@ public class TermList extends AppCompatActivity {
         termListViewModel.mTerms.observe(this, termObserver);
     }
 
+    /**
+     * initialize the recycler view
+     */
     private void initRecyclerView() {
         mRecyclerView.setHasFixedSize(true);
         LinearLayoutManager layoutManager = new LinearLayoutManager(this);

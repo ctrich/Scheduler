@@ -23,6 +23,9 @@ public class MainActivity extends AppCompatActivity {
         showTerm();
     }
 
+    /**
+     * Load the Term List activity
+     */
     public void showTerm() {
         Intent i = new Intent(this, TermList.class);
         startActivity(i);

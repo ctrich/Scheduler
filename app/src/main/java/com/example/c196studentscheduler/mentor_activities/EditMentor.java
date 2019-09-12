@@ -1,7 +1,6 @@
 package com.example.c196studentscheduler.mentor_activities;
 
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProviders;
 
 import android.content.Intent;
@@ -9,6 +8,7 @@ import android.os.Bundle;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.EditText;
+import android.widget.Toast;
 
 import com.example.c196studentscheduler.R;
 import com.example.c196studentscheduler.course_activities.CourseDetails;
@@ -19,7 +19,11 @@ import com.example.c196studentscheduler.viewmodel.MentorViewModelFactory;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
-
+/**
+ * Chris Richardson
+ * C196
+ * Student ID #000895452
+ */
 public class EditMentor extends AppCompatActivity {
     @BindView(R.id.mentor_edit_name)
     EditText name;
@@ -33,6 +37,7 @@ public class EditMentor extends AppCompatActivity {
     private Mentor currentMentor;
     private int courseId;
     private int mentorId;
+    private boolean editing;
 
 
     @Override
@@ -43,7 +48,16 @@ public class EditMentor extends AppCompatActivity {
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
         ButterKnife.bind(this);
+        if (savedInstanceState != null) {
+            editing = savedInstanceState.getBoolean(Constants.EDITING_KEY);
+        }
         initViewModel();
+    }
+
+    @Override
+    protected void onSaveInstanceState(Bundle outState) {
+        outState.putBoolean(Constants.EDITING_KEY, true);
+        super.onSaveInstanceState(outState);
     }
 
     @Override
@@ -54,18 +68,21 @@ public class EditMentor extends AppCompatActivity {
         return true;
     }
 
+    /**
+     * initialize the view model and set the text view text
+     */
     private void initViewModel() {
         factory = new MentorViewModelFactory(this.getApplication());
         viewModel = ViewModelProviders.of(this, factory).get(MentorViewModel.class);
 
-        viewModel.mLiveMentor.observe(this, new Observer<Mentor>() {
-            @Override
-            public void onChanged(Mentor mentor) {
+        viewModel.mLiveMentor.observe(this, mentor -> {
+            if (mentor != null) {
                 courseId = mentor.getCourseID();
-
-                name.setText(mentor.getName());
-                phone.setText(mentor.getPhone());
-                email.setText(mentor.geteMail());
+                if (!editing) {
+                    name.setText(mentor.getName());
+                    phone.setText(mentor.getPhone());
+                    email.setText(mentor.geteMail());
+                }
             }
         });
 
@@ -75,6 +92,9 @@ public class EditMentor extends AppCompatActivity {
 
     }
 
+    /**
+     * Load Course Details when the devices back button is pressed
+     */
     @Override
     public void onBackPressed () {
         Intent intent = new Intent(this, CourseDetails.class);
@@ -82,15 +102,23 @@ public class EditMentor extends AppCompatActivity {
         startActivity(intent);
     }
 
-
+    /**
+     *
+     * @param view
+     * Upadte an existing mentor
+     */
     public void updateMentor(View view) {
+       if (name.getText().toString().isEmpty() || phone.getText().toString().isEmpty() || email.getText().toString().isEmpty()) {
+           Toast.makeText(this, "All fields are required", Toast.LENGTH_SHORT).show();
+           return;
+       } else {
+           currentMentor = new Mentor(mentorId, courseId, name.getText().toString(), phone.getText().toString(), email.getText().toString());
+           viewModel.updateMentor(currentMentor);
 
-        currentMentor = new Mentor(mentorId, courseId, name.getText().toString(), phone.getText().toString(), email.getText().toString());
-        viewModel.updateMentor(currentMentor);
-
-        Intent intent = new Intent(this, CourseDetails.class);
-        intent.putExtra(Constants.COURSE_ID_KEY, courseId);
-        startActivity(intent);
+           Intent intent = new Intent(this, CourseDetails.class);
+           intent.putExtra(Constants.COURSE_ID_KEY, courseId);
+           startActivity(intent);
+       }
     }
 
     public void cancelMentorEdit(View view) {

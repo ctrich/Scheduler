@@ -19,7 +19,11 @@ import com.example.c196studentscheduler.entity.Mentor;
 import com.example.c196studentscheduler.entity.Note;
 import com.example.c196studentscheduler.entity.Term;
 import com.example.c196studentscheduler.util.DateConverter;
-
+/**
+ * Chris Richardson
+ * C196
+ * Student ID #000895452
+ */
 @Database(entities = {Term.class, Course.class, Mentor.class, Note.class, Assessment.class}, version = 5)
 @TypeConverters({DateConverter.class})
 public abstract class SchedulerRoomDatabase extends RoomDatabase {
@@ -33,14 +37,14 @@ public abstract class SchedulerRoomDatabase extends RoomDatabase {
 
     private static volatile SchedulerRoomDatabase INSTANCE;
     private static final Object lock = new Object();
-
+    //Singleton database instance
     static SchedulerRoomDatabase getDatabase(final Context context) {
-
         if (INSTANCE == null) {
             synchronized (lock) {
                 if (INSTANCE == null)
                     Log.d(TAG, "getDatabase: running " + context);
-                    INSTANCE = Room.databaseBuilder(context.getApplicationContext(), SchedulerRoomDatabase.class, DATABASE_NAME).fallbackToDestructiveMigration().build();
+                    INSTANCE = Room.databaseBuilder(context.getApplicationContext(), SchedulerRoomDatabase.class, DATABASE_NAME)
+                            .fallbackToDestructiveMigration().build();
             }
         }
         return INSTANCE;

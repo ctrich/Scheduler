@@ -9,10 +9,8 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.Toast;
 
 import com.example.c196studentscheduler.R;
 import com.example.c196studentscheduler.TermDetails;
@@ -23,12 +21,15 @@ import com.example.c196studentscheduler.viewmodel.CourseViewModel;
 import com.example.c196studentscheduler.viewmodel.CourseViewModelFactory;
 
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
-
+/**
+ * Chris Richardson
+ * C196
+ * Student ID #000895452
+ */
 public class CourseList extends AppCompatActivity {
     private static final String TAG = "CourseList";
 
@@ -68,6 +69,10 @@ public class CourseList extends AppCompatActivity {
         return true;
     }
 
+    /**
+     * Initialize the view model and set the adapter to display
+     * a list of courses in the recycler view
+     */
     private void initViewModel() {
         final Observer<List<Course>> courseObserver = new Observer<List<Course>>() {
             @Override
@@ -87,12 +92,20 @@ public class CourseList extends AppCompatActivity {
         courseViewModel.mCourseByTerm.observe(this, courseObserver);
     }
 
+    /**
+     * @param view
+     *
+     * Go to add course when the button is clicked
+     */
     public void showAddCourse(View view) {
         Intent intent = new Intent(this, AddCourse.class);
         intent.putExtra(Constants.TERM_ID_KEY, termId);
         startActivity(intent);
     }
 
+    /**
+     * return to term details when the devices back button is pressed
+     */
     @Override
     public void onBackPressed () {
         Intent intent = new Intent(this, TermDetails.class);
@@ -100,7 +113,9 @@ public class CourseList extends AppCompatActivity {
         startActivity(intent);
     }
 
-
+    /**
+     * initialize the recycler view
+     */
     private void initRecyclerView() {
         recyclerView.setHasFixedSize(true);
         LinearLayoutManager layoutManager = new LinearLayoutManager(this);

@@ -28,7 +28,6 @@ import com.example.c196studentscheduler.viewmodel.MentorViewModel;
 import com.example.c196studentscheduler.viewmodel.MentorViewModelFactory;
 
 import java.text.DateFormat;
-import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
@@ -36,7 +35,11 @@ import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
-
+/**
+ * Chris Richardson
+ * C196
+ * Student ID #000895452
+ */
 public class CourseDetails extends AppCompatActivity {
 
     @BindView(R.id.course_d_title)
@@ -57,6 +60,7 @@ public class CourseDetails extends AppCompatActivity {
 
     private int termId;
     private int courseId;
+    //Array list to hold the mentors
     private List<Mentor> mentorData = new ArrayList<>();
     private MentorListAdapter mAdapter;
     MentorViewModelFactory mentorFactory;
@@ -86,6 +90,9 @@ public class CourseDetails extends AppCompatActivity {
         return true;
     }
 
+    /**
+     * initialize the course and mentor viewmodels
+     */
     private void initViewModel() {
         CourseViewModelFactory factory = new CourseViewModelFactory(this.getApplication());
         courseViewModel = ViewModelProviders.of(this, factory).get(CourseViewModel.class);
@@ -109,7 +116,7 @@ public class CourseDetails extends AppCompatActivity {
 
         mentorFactory = new MentorViewModelFactory(this.getApplication(), courseId);
         mentorViewModel = ViewModelProviders.of(this, mentorFactory).get(MentorViewModel.class);
-
+        //Observe the mentor list and setup the adapter to display the list in the recycler view
         final Observer<List<Mentor>> mentorObserver = new Observer<List<Mentor>>() {
             @Override
             public void onChanged(List<Mentor> mentors) {
@@ -126,6 +133,9 @@ public class CourseDetails extends AppCompatActivity {
         mentorViewModel.mMentorsByCourseId.observe(this, mentorObserver);
     }
 
+    /**
+     * initialize the recycler view
+     */
     private void initRecyclerView() {
         mRecyclerView.setHasFixedSize(true);
         LinearLayoutManager layoutManager = new LinearLayoutManager(this);
@@ -167,17 +177,15 @@ public class CourseDetails extends AppCompatActivity {
         startActivity(intent);
     }
 
-
+    /**
+     *
+     * @param sDate
+     * @return a string that holds a date in MM/DD/YYYY format
+     */
     public String convertDateToString(Date sDate)  {
         DateFormat dateFormat = new SimpleDateFormat("MM/dd/yyyy");
         String date = dateFormat.format(sDate);
         return date;
     }
 
-
-//    public Date convertStringToDate(String sDate) throws ParseException {
-//        SimpleDateFormat simpleDateFormat = new SimpleDateFormat("MM/dd/yyyy");
-//        Date date = simpleDateFormat.parse(sDate);
-//        return date;
-//    }
 }

@@ -13,14 +13,20 @@ import com.example.c196studentscheduler.entity.Term;
 import java.util.List;
 import java.util.concurrent.Executor;
 import java.util.concurrent.Executors;
-
+/**
+ * Chris Richardson
+ * C196
+ * Student ID #000895452
+ */
 public class TermViewModel extends AndroidViewModel {
 
 
     public LiveData<List<Term>> mTerms;
     public List<Term> listTerms;
+    //Used to pass term data to the edit activity
     public MutableLiveData<Term> mLiveTerm = new MutableLiveData<>();
     private SchedulerRepository schedulerRepository;
+    //used to run a function on a background thread
     private Executor executor = Executors.newSingleThreadExecutor();
 
 
@@ -33,11 +39,19 @@ public class TermViewModel extends AndroidViewModel {
     }
 
 
-
+    /**
+     *
+     * @param term
+     * Adds a new term to the database
+     */
     public void addTerms(Term term) {
         schedulerRepository.createTerm(term);
     }
 
+    /**
+     * @param term
+     * Updates an existing term in the database
+     */
     public void updateTerm(Term term) {
         executor.execute(new Runnable() {
             @Override
@@ -47,6 +61,10 @@ public class TermViewModel extends AndroidViewModel {
         });
     }
 
+    /**
+     * Deletes a term from the database
+     * @param term
+     */
     public void deleteTerm(Term term) {
         executor.execute(new Runnable() {
             @Override
@@ -56,7 +74,10 @@ public class TermViewModel extends AndroidViewModel {
         });
     }
 
-
+    /**
+     * Passes the term data for the edit activity
+     * @param termId
+     */
     public void loadData(int termId) {
         executor.execute(new Runnable() {
             @Override

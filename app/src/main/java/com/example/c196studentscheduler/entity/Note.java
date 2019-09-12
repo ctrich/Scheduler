@@ -8,7 +8,11 @@ import androidx.room.Ignore;
 import androidx.room.PrimaryKey;
 
 import static androidx.room.ForeignKey.CASCADE;
-
+/**
+ * Chris Richardson
+ * C196
+ * Student ID #000895452
+ */
 @Entity(tableName = "Notes", foreignKeys = @ForeignKey(entity = Course.class,
                                                        parentColumns = "CourseId",
                                                        childColumns = "CourseId",

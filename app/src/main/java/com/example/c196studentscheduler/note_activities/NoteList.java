@@ -25,7 +25,11 @@ import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
-
+/**
+ * Chris Richardson
+ * C196
+ * Student ID #000895452
+ */
 public class NoteList extends AppCompatActivity {
 
     @BindView(R.id.notes_list_recycler)
@@ -59,6 +63,9 @@ public class NoteList extends AppCompatActivity {
         return true;
     }
 
+    /**
+     * Initialize the view model and set the adapter to display notes in the recycler view
+     */
     private void initViewModel() {
         final Observer<List<Note>> noteObserver = new Observer<List<Note>>() {
             @Override
@@ -95,6 +102,9 @@ public class NoteList extends AppCompatActivity {
         startActivity(intent);
     }
 
+    /**
+     * initialize the recycler view
+     */
     private void initRecyclerView() {
         recyclerView.setHasFixedSize(true);
         LinearLayoutManager layoutManager = new LinearLayoutManager(this);

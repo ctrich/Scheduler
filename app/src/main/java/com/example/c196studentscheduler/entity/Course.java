@@ -8,7 +8,11 @@ import androidx.room.Ignore;
 import androidx.room.PrimaryKey;
 
 import java.util.Date;
-
+/**
+ * Chris Richardson
+ * C196
+ * Student ID #000895452
+ */
 @Entity(tableName = "Courses", foreignKeys = {@ForeignKey(entity = Term.class,
                                    parentColumns = "TermId",
                                    childColumns = "TermId")})

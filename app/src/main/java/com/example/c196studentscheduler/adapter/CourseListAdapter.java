@@ -25,7 +25,13 @@ import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
-
+/**
+ * Chris Richardson
+ * C196
+ * Student ID #000895452
+ *
+ * Responsible for displaying all courses for selected term in a recyclerview
+ */
 public class CourseListAdapter extends RecyclerView.Adapter<CourseListAdapter.ViewHolder> {
 
     private final List<Course> mCourse;
@@ -44,6 +50,12 @@ public class CourseListAdapter extends RecyclerView.Adapter<CourseListAdapter.Vi
         return vh;
     }
 
+    /**
+     *
+     * @param holder
+     * @param position
+     * Sets the text views for each course
+     */
     @Override
     public void onBindViewHolder(@NonNull CourseListAdapter.ViewHolder holder, int position) {
         final Course course = mCourse.get(position);
@@ -56,7 +68,7 @@ public class CourseListAdapter extends RecyclerView.Adapter<CourseListAdapter.Vi
         holder.courseStart.setText(sDate);
         holder.courseEnd.setText(eDate);
         holder.courseStatus.setText(mCourse.get(position).getStatus());
-
+        //Passes the current courses courseID to the courseDetails activity
         holder.fab.setOnClickListener(view -> {
             Intent intent = new Intent(context, CourseDetails.class);
             intent.putExtra(Constants.COURSE_ID_KEY, course.getCourseId());
@@ -69,6 +81,10 @@ public class CourseListAdapter extends RecyclerView.Adapter<CourseListAdapter.Vi
         super.onAttachedToRecyclerView(recyclerView);
     }
 
+    /**
+     *
+     * @return the number of courses that belong to the selected course
+     */
     @Override
     public int getItemCount() {
         return mCourse.size();

@@ -27,7 +27,11 @@ import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
-
+/**
+ * Chris Richardson
+ * C196
+ * Student ID #000895452
+ */
 public class AssessmentList extends AppCompatActivity {
 
     @BindView(R.id.assessment_list_recycler)
@@ -45,6 +49,7 @@ public class AssessmentList extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_assessment_list);
         setTitle(Constants.ASSESSMENT_LIST_TITLE);
+        //Set the back button in the actionbar
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
         ButterKnife.bind(this);
@@ -52,6 +57,11 @@ public class AssessmentList extends AppCompatActivity {
         initViewModel();
     }
 
+    /**
+     *
+     * @param item
+     * Sends the courseId when the back button in the actionbar is pressed
+     */
     @Override
     public boolean onOptionsItemSelected(MenuItem item)
     {
@@ -62,11 +72,15 @@ public class AssessmentList extends AppCompatActivity {
     }
 
     private void initViewModel() {
+        //Observe Live data and update the list when changes are made
         final Observer<List<Assessment>> assessmentObserver = new Observer<List<Assessment>>() {
             @Override
             public void onChanged(List<Assessment> assessments) {
+                //clear the array list
                 assessmentData.clear();
+                //add all assessment from the live data list to the array list
                 assessmentData.addAll(assessments);
+                //set up the adapter to display the list in the recycler view
                 if (mAdapter == null) {
                     mAdapter = new AssessmentListAdapter(assessmentData, AssessmentList.this);
                     recyclerView.setAdapter(mAdapter);
@@ -96,6 +110,9 @@ public class AssessmentList extends AppCompatActivity {
         startActivity(intent);
     }
 
+    /**
+     * initialize the recycler view
+     */
     private void initRecyclerView() {
         recyclerView.setHasFixedSize(true);
         LinearLayoutManager layoutManager = new LinearLayoutManager(this);
